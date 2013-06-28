@@ -1,0 +1,8 @@
+*.pyc
+.idea
+.DS_Store
+*~
+whoosh_index
+logs
+local_settings.py
+media/*

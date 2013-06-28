@@ -1,0 +1,4 @@
+django>=1.5.1
+south
+easy_thumbnails
+django-guardian>=1.1.0
