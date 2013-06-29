@@ -51,6 +51,15 @@ class Task(models.Model):
     is_deleted = models.BooleanField(_('Deleted'), default=False)
     order = models.PositiveSmallIntegerField(_('Order'), default=0)
 
+    def can_edit(self, user):
+
+
+        if self.check_list.owner == user or user.is_staff:
+            return True
+
+        return False
+
+
     def __unicode__(self):
         return self.title
 

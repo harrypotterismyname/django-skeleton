@@ -67,7 +67,22 @@
         $('input.task').prettyCheckable({
             color: 'green'
         });
+
+
+        {% if checklist.owner != user %}
+
+            $('input.task').attr("disabled","disabled")
+
+
+
+        {% endif %}
+
+
+
+
     });
+
+
 
     $('input.task').on('change', checked);
 
