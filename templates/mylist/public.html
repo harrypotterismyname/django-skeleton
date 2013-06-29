@@ -28,7 +28,7 @@
                     <li>
                         <h3><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></h3>
                         <p>
-                            <span class="badge badge-important">{{ item.count_task }} tasks</span>
+                            <span class="badge badge-important">{{ item.count_task }} task{{ item.count_task|pluralize }}</span>
                             <span class="rating">
                             <i class="icon-star"></i>
                             <i class="icon-star"></i>
@@ -36,7 +36,7 @@
                             <i class="icon-star"></i>
                             <i class="icon-star-empty"></i>
                             </span>
-                            <time>3 day ago</time>
+                            <time>{{ item.created_at|timesince }} ago</time>
                         </p>
                     </li>
                 {% endfor %}
