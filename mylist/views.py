@@ -1,11 +1,12 @@
 import datetime
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.utils import timezone
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView, View
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormView
 from mylist.models import CheckList, Task
 from mylist.forms import ChecklistForm
+import simplejson
 
 
 class HomeIndex(ListView):
@@ -60,10 +61,13 @@ class DetailView(DetailView):
         return context
 
 
-class UpdateTaskView(FormView):
+class UpdateTaskView(View):
 
-    def post(self, request, task_id):
+   # model = Task
+    def post(self, request, *args, **kwargs):
+        task_id= kwargs.get('id')
         self.task = Task.objects.get(id= task_id)
+        print task_id
 
         if request.POST.get('value','false') == 'true':
             self.task.is_checked = True
@@ -72,6 +76,8 @@ class UpdateTaskView(FormView):
             self.task.is_checked = False
 
         self.task.save()
+
+        return HttpResponse(simplejson.dumps({'result':'ok'}, ensure_ascii= False))
 
 
     #model = Task
