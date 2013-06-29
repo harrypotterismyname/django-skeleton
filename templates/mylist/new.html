@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load i18n webdesign bootstrap %}
+
+{% block title %}New Checklist{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="span12">
+            <h1>{% trans "Add New Checklist" %}</h1>
+            <hr>
+            <form action="" method="post" class="form-horizontal">{% csrf_token %}
+                {{ form|bootstrap }}
+                <div class="control-group">
+                    <div class="controls">
+                        <button class="btn btn-primary btn-large">
+                            <i class="icon-save"></i> {% trans 'Create New' %}
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+{% endblock %}
+
+{% block extra_js %}
+    <script type="text/javascript">
+    $(function(){
+    });
+    </script>
+{% endblock %}

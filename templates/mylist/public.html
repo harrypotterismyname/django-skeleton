@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% load i18n webdesign %}
+
+{% block title %}Public Checklist{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="span12">
+            <h1>{% trans "Public Checklist" %}</h1>
+
+            <ul class="nav nav-pills">
+                <li class="active">
+                    <a href="#">Recent</a>
+                </li>
+                <li>
+                    <a href="#">Popular</a>
+                </li>
+                <li>
+                    <a href="#">Most Rated</a>
+                </li>
+            </ul>
+
+            <hr>
+
+            <ul class="checklist-list">
+                {% for item in items %}
+                    <li>
+                        <h3><a href="{{ item.get_url }}">{{ item.title }}</h3>
+                        <p>
+                            <span class="badge badge-important">{{ item.count_task }} tasks</span>
+                            <span class="badge"><i class="icon-share-alt"></i></span>
+                            <span class="rating">
+                            <i class="icon-star"></i>
+                            <i class="icon-star"></i>
+                            <i class="icon-star"></i>
+                            <i class="icon-star"></i>
+                            <i class="icon-star-empty"></i>
+                            </span>
+                            <time>3 day ago</time>
+                        </p>
+                    </li>
+                {% endfor %}
+
+            </ul>
+
+            <hr>
+            <ul class="pager">
+                <li class="previous">
+                    <a href="#"><i class="icon-arrow-left"></i></a>
+                </li>
+                <li class="next">
+                    <a href="#"><i class="icon-arrow-right"></i></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+{% endblock %}
+
+{% block extra_js %}
+    <script type="text/javascript">
+    $(function(){
+    });
+    </script>
+{% endblock %}

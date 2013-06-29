@@ -7,6 +7,40 @@
 <div class="container">
     <div class="row">
         <div class="span12">
+            <h1>{% trans "My Checklist" %}</h1>
+            <ul class="nav nav-pills">
+                <li class="active">
+                    <a href="#">Upcoming</a>
+                </li>
+                <li>
+                    <a href="#">Recent</a>
+                </li>
+            </ul>
+
+            <hr>
+
+            <ul class="checklist-list">
+                {% for item in items %}
+                <li>
+                    <h3><a href="{{ item.get_url }}">{{ item.title }}</h3>
+                    <p>
+                        <span class="badge badge-important">{{ item.count_task }} tasks</span>
+                        <span class="badge"><i class="icon-share-alt"></i></span>
+                        <time>3 day ago</time>
+                    </p>
+                </li>
+                {% endfor %}
+            </ul>
+
+            <hr>
+            <ul class="pager">
+                <li class="previous">
+                    <a href="#"><i class="icon-arrow-left"></i></a>
+                </li>
+                <li class="next">
+                    <a href="#"><i class="icon-arrow-right"></i></a>
+                </li>
+            </ul>
         </div>
     </div>
 </div>
