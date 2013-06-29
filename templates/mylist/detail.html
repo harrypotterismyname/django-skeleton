@@ -9,7 +9,7 @@
         <div class="span12">
             <a href="" class="btn btn-warning pull-right btn-fork-task"><i class="icon-ok"></i> Fork this</a>
             {% if request.user == checklist.owner %}
-                <a href="" class="btn btn-success pull-right btn-fork-task"><i class="icon-pencil"></i></a>
+                <a href="{% url 'mylist:update' checklist.id %}" class="btn btn-success pull-right btn-fork-task"><i class="icon-pencil"></i></a>
             {% endif %}
 
             <h2 class="task-title">{{ checklist.title }}</h2>

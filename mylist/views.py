@@ -56,7 +56,7 @@ class DetailView(DetailView):
         context = super(DetailView, self).get_context_data(**kwargs)
 
         id = self.kwargs.get('id')
-        context['tasks'] = Task.objects.filter(is_deleted=False, check_list__public=True, check_list__id=id)
+        context['tasks'] = Task.objects.filter(is_deleted=False, check_list__id=id)
 
         return context
 
@@ -119,3 +119,8 @@ class AddNewView(FormView):
 
         return super(AddNewView, self).post(request)
 
+
+class UpdateChecklist(FormView):
+    template_name = "mylist/update.html"
+    form_class = ChecklistForm
+    model = CheckList

@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load i18n webdesign bootstrap %}
+
+{% block title %}Update Checklist{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="span12">
+            <h1>{% trans "Update Checklist" %}</h1>
+            <hr>
+            <form action="" method="post" class="form-horizontal">{% csrf_token %}
+                <div class="row" ng-app ng-controller="TaskCtrl">
+                    <div class="span6">
+                        {{ form|bootstrap }}
+                    </div>
+                    <div class="span6">
+                        {% verbatim %}
+                        <ul class="new-task-list">
+                            <li ng-repeat="i in tasks" id="task-{{ i }}">
+                                <input type="text" name="title{{ i }}" class="span3" placeholder="Task title">
+                                <input type="text" name="due{{ i }}" class="span2" placeholder="Complete on"> days
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                        <input type="hidden" name="num_task" value="{{ tasks.length }}">
+                        <a ng-click="addLine()" class="btn-naked btn-add-task-line"><i class="icon-plus-sign icon-2x"></i></a>
+                        {% endverbatim %}
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button class="btn btn-primary btn-large">
+                        <i class="icon-save"></i> {% trans 'Update Checklist' %}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}datepicker/datepicker.css">
+{% endblock %}
+
+{% block extra_js %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/angular.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}datepicker/bootstrap-datepicker.js"></script>
+    <script type="text/javascript">
+    $(function(){
+        $('#id_start_at').datepicker({
+            format: "dd/mm/yyyy"
+        });
+    });
+
+    function TaskCtrl($scope) {
+        $scope.tasks = [1, 2];
+
+        $scope.addLine = function() {
+            var i = $scope.tasks[$scope.tasks.length-1] + 1;
+            $scope.tasks.push(i);
+        };
+    }
+    </script>
+{% endblock %}
