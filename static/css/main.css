@@ -104,3 +104,41 @@ fieldset legend {
     display: inline-block;
     margin-left: 10px;
 }
+
+.task-list {
+    padding: 0;
+    margin: 0;
+}
+.task-list li {
+    display: block;
+    margin-bottom: 20px;
+}
+.task-list label {
+    font-size: 18px;
+    line-height: 18px;
+}
+.task-list .remain {
+    font-size: 12px;
+    color: #888;
+    line-height: 12px;
+    margin-left: 35px;
+}
+
+.task-metadata {
+    font-family: "Segoe UI Light", "SegoeUILight", "Helvetica Neue", "Helvetica", Arial, sans-serif;
+    font-size: 24px;
+    color: #888;
+}
+
+h2.task-title {
+    margin-bottom: 10px;
+}
+
+.task-rating {
+    line-height: 26px;
+    font-size: 18px;
+}
+
+.btn-fork-task {
+    margin-top: 20px;
+}

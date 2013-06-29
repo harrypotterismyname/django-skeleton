@@ -7,3 +7,7 @@ class HomeIndex(TemplateView):
 
 class PublicView(TemplateView):
     template_name = "mylist/public.html"
+
+
+class DetailView(TemplateView):
+    template_name = "mylist/detail.html"
