@@ -7,7 +7,7 @@
 <div class="container">
     <div class="row">
         <div class="span12">
-            <a href="" class="btn btn-warning pull-right btn-fork-task"><i class="icon-ok"></i> Fork this</a>
+            <a href="javascript:clone_checklist({{ checklist.id }});" class="btn btn-warning pull-right btn-fork-task"><i class="icon-ok"></i> Fork this</a>
             {% if request.user == checklist.owner %}
                 <a href="{% url 'mylist:update' checklist.id %}" class="btn btn-success pull-right btn-fork-task"><i class="icon-pencil"></i></a>
             {% endif %}

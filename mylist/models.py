@@ -13,7 +13,7 @@ class CheckList(models.Model):
 
     rate = models.FloatField(_('Rate'), null=True, blank=True)
     owner = models.ForeignKey(user_model_label, null=True, related_name='owner', verbose_name=_('Owner'))
-    start_at = models.DateTimeField(_('Start at'), auto_now_add= True)
+    start_at = models.DateTimeField(_('Start at'))
 
     is_deleted = models.BooleanField(_('Deleted'), default=False)
     created_at = models.DateTimeField(_('Created at'), null=True, auto_now_add=True)

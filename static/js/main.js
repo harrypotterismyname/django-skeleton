@@ -52,6 +52,8 @@ function clone_checklist(id)
                 url:'/ajax/checklist/' + id +'/clone/',
 
                 success:function(data){
+
+                    window.location.href = '/checklist/' + id + '/update/';
                     alert('fuck you!');
                 }
             });
