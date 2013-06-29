@@ -157,7 +157,13 @@ h2.task-title {
 
 /* RESPONSIVE */
 @media (max-width: 979px) {
-  body {
-    padding-top: 0 !important;
-  }
+    body {
+        padding-top: 0 !important;
+    }
+
+    .btn-add-new {
+        position: absolute;
+        left: 80px;
+        top: 5px;
+    }
 }
