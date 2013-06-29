@@ -20,28 +20,16 @@
             <hr>
 
             <ul class="checklist-list">
+                {% for item in items %}
                 <li>
-                    <h3><a href="">{% lorem 5 w random %}</a></h3>
+                    <h3><a href="{{ item.get_url }}">{{ item.title }}</h3>
                     <p>
-                        <span class="badge badge-important">3 tasks</span>
+                        <span class="badge badge-important">{{ item.count_task }} tasks</span>
                         <span class="badge"><i class="icon-share-alt"></i></span>
                         <time>3 day ago</time>
                     </p>
                 </li>
-                <li>
-                    <h3><a href="">{% lorem 5 w random %}</a></h3>
-                    <p>
-                        <span class="badge badge-important">3 tasks</span>
-                        <time>3 day ago</time>
-                    </p>
-                </li>
-                <li>
-                    <h3><a href="">{% lorem 5 w random %}</a></h3>
-                    <p>
-                        <span class="badge badge-important">3 tasks</span>
-                        <time>3 day ago</time>
-                    </p>
-                </li>
+                {% endfor %}
             </ul>
 
             <hr>

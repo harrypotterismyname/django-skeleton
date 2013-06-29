@@ -1,9 +1,14 @@
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
+from mylist.models import CheckList
 
 
-class HomeIndex(TemplateView):
+class HomeIndex(ListView):
+    model = CheckList
     template_name = "mylist/home.html"
+    context_object_name = 'items'
 
 
-class PublicView(TemplateView):
+class PublicView(ListView):
+    model = CheckList
     template_name = "mylist/public.html"
+    context_object_name = 'items'

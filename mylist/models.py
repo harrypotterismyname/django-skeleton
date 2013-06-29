@@ -2,7 +2,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from userena.utils import user_model_label
 from django.template.defaultfilters import slugify
-
+from random import randint
 
 class CheckList(models.Model):
     title = models.CharField(max_length=1024, blank=True)
@@ -14,30 +14,16 @@ class CheckList(models.Model):
     def __unicode__(self):
         return self.title
 
+    def save(self, *args, **kwargs):
+        #TODO: fix this
+
+        if self.slug is None or self.slug == "":
+            self.slug = CheckList.generate_slug(self.title)
+
+        super(CheckList, self).save(*args, **kwargs)
+
     def get_by_id(self, id):
         return self.objects.get(id=id)
-
-    def insert(self, checklist):
-        self.title = checklist.title
-        if not generate_slug(checklist.title):
-            self.slug = generate_slug(checklist.title)
-        else:
-            self.save()
-            self.slug = generate_slug(self, self.title + id)
-            self.save()
-        return self
-
-    def insert(self, title):
-        self.title = title
-
-        if not generate_slug(title):
-            self.slug = generate_slug(title)
-        else:
-            self.save()
-            self.slug = generate_slug(self, self.title + id)
-            self.save()
-
-        return self
 
     def update(self, title):
         self.title = title
@@ -60,26 +46,28 @@ class CheckList(models.Model):
         return Task.objects.filter(id_check_list = self.id)
 
     def count_task(self):
-        return Task.objects.filter(is_check_list=self.id).count()
+        return Task.objects.filter(check_list_id=self.id).count()
 
+    def get_url(self):
+        return '/checklist/' + self.slug + '/'
 
-@classmethod
-def generate_slug(self, name):
-    count = 1
-    slug = slugify(name)
+    @classmethod
+    def generate_slug(self, name):
+        count = 1
+        slug = slugify(name)
 
-    def _get_query(slug):
-        if CheckList.objects.filter(slug=slug).count():
-            return True
+        def _get_query(slug):
+            if CheckList.objects.filter(slug=slug).count():
+                return True
 
-    while _get_query(slug):
-        slug = slugify(u'{0}-{1}'.format(name, count))
-        # make sure the slug is not too long
-        while len(slug) > CheckList._meta.get_field('slug').max_length:
-            name = name[:-1]
+        while _get_query(slug):
             slug = slugify(u'{0}-{1}'.format(name, count))
-        count += 1 # + 1
-    return slug
+            # make sure the slug is not too long
+            while len(slug) > CheckList._meta.get_field('slug').max_length:
+                name = name[:-1]
+                slug = slugify(u'{0}-{1}'.format(name, count))
+            count = randint(1,100)
+        return slug
 
 
 class Task(models.Model):
