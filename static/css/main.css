@@ -13,13 +13,6 @@ body {
     text-shadow: none;
 }
 
-.footer {
-    padding: 30px 0;
-    margin-top: 60px;
-    border-top: 1px solid #e5e5e5;
-    background-color: #f5f5f5;
-}
-
 ul.no-list {
     padding: 0;
     margin: 0;
@@ -61,5 +54,18 @@ button.btn-nude:active {
     box-shadow: none;
 }
 
+@font-face {
+  font-family: 'SegoeUILight';
+  src: url('../font/segoeuil.eot');
+  src: url('../font/segoeuil.eot') format('embedded-opentype'),
+  url('../font/segoeuil.woff') format('woff'),
+  url('../font/segoeuil.ttf') format('truetype'),
+  url('../font/segoeuil.svg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
 
-
+h1, h2, h3 {
+    font-family: "Segoe UI Light", "SegoeUILight", "Helvetica Neue", "Helvetica", Arial, sans-serif;
+    margin-bottom: 30px;
+}
