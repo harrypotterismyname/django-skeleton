@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from mylist.models import CheckList, Task
 
 from userena.models import UserenaLanguageBaseProfile
 from userena.utils import user_model_label
@@ -23,3 +24,14 @@ class Profile(UserenaLanguageBaseProfile):
 
     def __unicode__(self):
         return "profile of %s" % self.user.username
+
+    def clone_checklist(self, old_checklist):
+
+        new_checklist = CheckList( title = self.old_checklist.title, owner = self )
+        new_checklist.save()
+
+        for task in self.old_checklist.tasks:
+            new_task = Task( title = task.title, checklist = new_checklist, due_date = task.due_date , order = task.order  )
+            new_task.save()
+
+        return  new_checklist

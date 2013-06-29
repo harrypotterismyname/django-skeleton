@@ -43,3 +43,16 @@ $.ajaxSetup({
         }
     }
 });
+
+
+function clone_checklist(id)
+{
+    $.ajax({
+                type:'POST',
+                url:'/ajax/checklist/' + id +'/clone/',
+
+                success:function(data){
+                    alert('fuck you!');
+                }
+            });
+}
