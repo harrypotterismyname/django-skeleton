@@ -26,10 +26,9 @@
             <ul class="checklist-list">
                 {% for item in items %}
                     <li>
-                        <h3><a href="{{ item.get_url }}">{{ item.title }}</a></h3>
+                        <h3><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></h3>
                         <p>
                             <span class="badge badge-important">{{ item.count_task }} tasks</span>
-                            <span class="badge"><i class="icon-share-alt"></i></span>
                             <span class="rating">
                             <i class="icon-star"></i>
                             <i class="icon-star"></i>
