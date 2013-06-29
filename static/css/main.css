@@ -154,6 +154,33 @@ h2.task-title {
     margin-top: 20px;
 }
 
+.new-task-list {
+    padding: 0;
+    margin: 0;
+}
+.new-task-list li {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.btn-naked {
+    text-decoration: none;
+    display: inline-block;
+    vertical-align: middle;
+}
+.btn-naked:hover {
+    text-decoration: none;
+}
+.btn-naked.red {
+    color: #e95d4e;
+}
+.btn-naked.red:hover {
+    color: #f95e4f;
+}
+
+.btn-remove-task-line {
+    margin-left: 15px;
+}
 
 /* RESPONSIVE */
 @media (max-width: 979px) {
