@@ -54,6 +54,17 @@ button.btn-nude:active {
     box-shadow: none;
 }
 
+.navbar .brand {
+    padding: 10px 20px 10px;
+}
+.brand span {
+    background: url("../img/logo.png") 0 0 no-repeat;
+    background-size: 41px 30px;
+    width: 41px;
+    height: 30px;
+    display: block;
+}
+
 @font-face {
     font-family: 'SegoeUILight';
     src: url('../font/segoeuil.eot');
