@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from mylist.models import CheckList, Task
 
@@ -27,7 +28,7 @@ class Profile(UserenaLanguageBaseProfile):
 
     def clone_checklist(self, old_checklist):
 
-        new_checklist = CheckList( title = old_checklist.title, owner = self.user )
+        new_checklist = CheckList( title = old_checklist.title, owner = self.user, start_at = timezone.now() )
         new_checklist.save()
 
         for task in old_checklist.tasks.filter( is_deleted = False):

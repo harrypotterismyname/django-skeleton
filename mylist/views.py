@@ -45,6 +45,7 @@ class PublicView(ListView):
     model = CheckList
     template_name = "mylist/public.html"
     context_object_name = 'items'
+    queryset = CheckList.objects.filter( public = True)
 
 
 class DetailView(DetailView):
@@ -164,6 +165,11 @@ class UpdateChecklist(FormView):
         self.instance = instance
         if instance:
             self.initial['title'] = instance.title
+            if instance.start_at is None:
+                instance.start_at = timezone.now()
+                instance.save()
+
+
             self.initial['start_at'] = datetime.datetime.strftime(instance.start_at, "%d/%m/%Y")
             self.initial['public'] = instance.public
         return super(UpdateChecklist, self).get(request)
