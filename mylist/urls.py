@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, url
-from qna.views import HomeIndex
+from mylist.views import HomeIndex
 
-urlpatterns = patterns('qna.views',
+urlpatterns = patterns('mylist.views',
     url('^$', HomeIndex.as_view(), name='index'),
 )
