@@ -28,6 +28,12 @@
                     <li>
                         <h3><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></h3>
                         <p>
+                            <span class="meta">
+                                <a href="{% url 'userena_profile_detail' item.owner.username %}" class="dark-link">{{ item.owner.username }}</a>
+                                <i class="icon-angle-right"></i>
+                                <time>{{ item.created_at|timesince }} ago</time>
+                            </span>
+
                             <span class="badge badge-important">{{ item.count_task }} task{{ item.count_task|pluralize }}</span>
                             <span class="rating">
                             <i class="icon-star"></i>
@@ -36,8 +42,8 @@
                             <i class="icon-star"></i>
                             <i class="icon-star-empty"></i>
                             </span>
-                            <time>{{ item.created_at|timesince }} ago</time>
                         </p>
+                        <div class="clearfix"></div>
                     </li>
                 {% endfor %}
 

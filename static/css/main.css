@@ -99,21 +99,27 @@ fieldset legend {
 }
 .checklist-list li {
     display: block;
+    margin-bottom: 15px;
 }
 .checklist-list h3 {
     margin-bottom: 0;
 }
 .checklist-list time {
     font-weight: normal;
-    color: #aaa;
     display: inline-block;
-    margin-left: 10px;
-    font-size: 18px;
-    line-height: 26px;
 }
 .checklist-list .rating {
     display: inline-block;
     margin-left: 10px;
+}
+.checklist-list .meta {
+    display: block;
+    color: #aaa;
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+.checklist-list .meta a {
+    color: #aaa;
 }
 
 .task-list {
@@ -156,6 +162,7 @@ h2.task-title {
 
 .btn-fork-task {
     margin-top: 20px;
+    margin-left: 20px;
 }
 
 .new-task-list {
