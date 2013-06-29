@@ -9,7 +9,8 @@ class CheckListAdmin(admin.ModelAdmin):
 
 
 class TaskAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('title', 'order', 'is_deleted')
+    list_editable = ('order', 'is_deleted')
 
 
 admin.site.register(CheckList, CheckListAdmin)

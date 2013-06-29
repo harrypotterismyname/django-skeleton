@@ -1,5 +1,7 @@
+import datetime
 from django.core.urlresolvers import reverse
 from django.db import models
+from django.utils import timezone
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
 from userena.utils import user_model_label
@@ -30,7 +32,7 @@ class CheckList(models.Model):
         return self.tasks.filter(is_deleted=False).count()
 
     def get_absolute_url(self):
-        return reverse('mylist:detail', kwargs={'slug': self.slug})
+        return reverse('mylist:detail', kwargs={'slug': self.slug, 'id': self.id})
 
     class Meta:
         ordering = ('-created_at',)
@@ -40,6 +42,9 @@ class Task(models.Model):
     title = models.CharField(_('Title'), max_length=255)
     check_list = models.ForeignKey(CheckList, related_name='tasks', verbose_name=_('Checklist'))
     parent = models.ForeignKey('self', null=True, blank=True, related_name='children', verbose_name=_('Parent'))
+
+    start_at = models.DateTimeField(_('Start at'), blank=True, null=True)
+    due_date = models.PositiveSmallIntegerField(_('Due date'), default=0)
 
     is_checked = models.BooleanField(_('Checked'), default=False)
     is_deleted = models.BooleanField(_('Deleted'), default=False)
@@ -56,6 +61,12 @@ class Task(models.Model):
 
     def count_child_task(self):
         return self.get_by_is_checked().count()
+
+    def is_overdated(self):
+        if self.start_at and self.due_date > 0:
+            if self.start_at + datetime.timedelta(days=self.due_date) < timezone.now():
+                return True
+        return False
 
     class Meta:
         ordering = ('-check_list', 'order',)

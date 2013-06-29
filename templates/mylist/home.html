@@ -9,11 +9,14 @@
         <div class="span12">
             <h1>{% trans "My Checklist" %}</h1>
             <ul class="nav nav-pills">
-                <li class="active">
+                <li {% if not active %}class="active"{% endif %}>
                     <a href="/">Upcoming</a>
                 </li>
-                <li>
+                <li {% if active == 'recent' %}class="active"{% endif %}>
                     <a href="/?order=recent">Recent</a>
+                </li>
+                <li {% if active == 'overdated' %}class="active"{% endif %}>
+                    <a href="/?order=overdated">Overdated</a>
                 </li>
             </ul>
 
