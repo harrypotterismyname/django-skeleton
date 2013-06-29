@@ -1,12 +1,14 @@
 import datetime
+
 from django.http import HttpResponseRedirect, HttpResponse
 from django.utils import timezone
-from django.views.generic import TemplateView, ListView, View
+from django.views.generic import ListView, View
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormView
+import simplejson
+
 from mylist.models import CheckList, Task
 from mylist.forms import ChecklistForm
-import simplejson
 
 
 class HomeIndex(ListView):
@@ -141,3 +143,52 @@ class UpdateChecklist(FormView):
     template_name = "mylist/update.html"
     form_class = ChecklistForm
     model = CheckList
+    initial = {}
+    instance = None
+
+    def get_query(self, k):
+        checklist_id = k.get('id', None)
+        if checklist_id:
+            instance = CheckList.objects.get(pk=int(checklist_id))
+            return instance
+        return None
+
+    def get_context_data(self, **kwargs):
+        context = super(UpdateChecklist, self).get_context_data(**kwargs)
+        if self.instance:
+            context['tasks'] = self.instance.tasks.filter(is_deleted=False)
+        return context
+
+    def get(self, request, *args, **kwargs):
+        instance = self.get_query(kwargs)
+        self.instance = instance
+        if instance:
+            self.initial['title'] = instance.title
+            self.initial['start_at'] = datetime.datetime.strftime(instance.start_at, "%d/%m/%Y")
+            self.initial['public'] = instance.public
+        return super(UpdateChecklist, self).get(request)
+
+    def post(self, request, *args, **kwargs):
+        title = request.POST.get('title', None)
+        start_at = request.POST.get('start_at', timezone.now())
+        public = request.POST.get('public', False)
+        num_task = request.POST.get('num_task', None)
+        tasks = []
+        if num_task:
+            for i in range(1, int(num_task)):
+                t = request.POST.get('title%d' % i, '')
+                d = request.POST.get('due%d' % i, None)
+                if t:
+                    tasks.append([t, d])
+
+        instance = self.get_query(kwargs)
+        if title:
+            start_at = datetime.datetime.combine(datetime.datetime.strptime(start_at, "%d/%m/%Y"), datetime.time(0, 0))
+            instance.title=title
+            instance.public=public
+            instance.start_at=start_at
+            instance.save()
+
+            return HttpResponseRedirect(instance.get_absolute_url())
+
+        return super(UpdateChecklist, self).post(request)
