@@ -70,7 +70,8 @@ class Task(models.Model):
 
     def remain_date(self):
         if not self.is_overdated():
-            return self.start_at + datetime.timedelta(days=self.due_date)
+            return datetime.datetime.now() - (self.start_at + datetime.timedelta(days=self.due_date))
+        return None
 
     class Meta:
         ordering = ('-check_list', 'order',)
