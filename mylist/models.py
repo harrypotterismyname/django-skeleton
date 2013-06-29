@@ -60,3 +60,24 @@ class Task(models.Model):
     is_deleted = models.BooleanField(default=False)
     id_check_list = models.ForeignKey(CheckList, null=True)
     parent = models.ForeignKey('self', null=True, blank=True)
+
+    def get_by_id(self):
+        return self.objects.filter(id=id)
+
+    def get_by_title(self, title):
+        return self.objects.filter(title=title)
+
+    def get_by_is_checked(self):
+        return self.objects.filter(is_checked=True)
+
+    def get_task_child(self):
+        return self.objects.filter(parent=self)
+
+    def update(self, task):
+        self.title= task.title
+        self.is_checked = task.is_checked
+        self.id_check_list = task.id_check_list
+        self.is_deleted =task.is_deleted
+        self .parent = task.parent
+        return  self
+        
