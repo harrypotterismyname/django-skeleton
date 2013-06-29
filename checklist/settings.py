@@ -87,6 +87,7 @@ INSTALLED_APPS = (
     'guardian',
     'south',
     'mailqueue',
+    'bootstrapform',
     'profiles',
     'mylist',
 )
