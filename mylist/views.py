@@ -1,7 +1,7 @@
 from django.views.generic import TemplateView, ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
-from mylist.models import CheckList
+from mylist.models import CheckList, Task
 
 
 class HomeIndex(ListView):
@@ -46,6 +46,15 @@ class DetailView(DetailView):
     slug_field = 'slug'
     pk_url_kwarg = 'id'
     context_object_name = 'checklist'
+
+
+    def get_context_data(self, **kwargs):
+        context = super(DetailView, self).get_context_data(**kwargs)
+
+        id = self.kwargs.get('id')
+        context['tasks'] = Task.objects.filter(is_deleted=False, check_list__public=True, check_list__id=id)
+
+        return context
 
 
 class AddNewView(CreateView):

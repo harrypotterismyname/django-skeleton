@@ -64,9 +64,13 @@ class Task(models.Model):
 
     def is_overdated(self):
         if self.start_at and self.due_date > 0:
-            if self.start_at + datetime.timedelta(days=self.due_date) < timezone.now():
+            if (self.start_at + datetime.timedelta(days=self.due_date)) < timezone.now():
                 return True
         return False
+
+    def remain_date(self):
+        if not self.is_overdated():
+            return self.start_at + datetime.timedelta(days=self.due_date)
 
     class Meta:
         ordering = ('-check_list', 'order',)
