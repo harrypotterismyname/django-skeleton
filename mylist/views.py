@@ -61,8 +61,21 @@ class DetailView(DetailView):
 
 
 class UpdateTaskView(FormView):
+
+    def post(self, request, task_id):
+        self.task = Task.objects.get(id= task_id)
+
+        if request.POST.get('value','false') == 'true':
+            self.task.is_checked = True
+
+        else:
+            self.task.is_checked = False
+
+        self.task.save()
+
+
     #model = Task
-    template_name = "mylist/ajax-result.html"
+    #template_name = "mylist/ajax-result.html"
 
 
 class AddNewView(FormView):

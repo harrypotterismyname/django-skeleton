@@ -1,5 +1,5 @@
 from django import forms
-from mylist.models import CheckList
+from mylist.models import CheckList,Task
 
 
 class ChecklistForm(forms.ModelForm):

@@ -77,7 +77,7 @@
         if(id != ""){
             $.ajax({
                 type:'POST',
-                url:'/task/' + id +'/update/',
+                url:'/ajax/task/' + id +'/update/',
                 data:'value=' + $(this).is(':checked'),
                 success:function(data){
                     console.log("success");
