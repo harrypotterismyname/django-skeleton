@@ -6,3 +6,4 @@ whoosh_index
 logs
 local_settings.py
 media/*
+checklist.db

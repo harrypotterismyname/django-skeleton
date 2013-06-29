@@ -7,6 +7,8 @@ class HomeIndex(ListView):
     template_name = "mylist/home.html"
     context_object_name = 'items'
 
+    #queryset = CheckList.objects.filter()
+
 
 class PublicView(ListView):
     model = CheckList
