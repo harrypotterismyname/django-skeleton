@@ -70,7 +70,7 @@ class CloneChecklistView(View):
    # model = Task
     def post(self, request, *args, **kwargs):
         checklist_id= kwargs.get('id')
-        self.old_checklist = CheckList.objects.get(id= checklist_id)
+        self.old_checklist = CheckList.objects.get(id=int(checklist_id))
         new_checklist = request.user.profile.clone_checklist(self.old_checklist)
 
 
