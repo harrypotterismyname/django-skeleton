@@ -81,3 +81,26 @@ fieldset legend {
     height: 80px;
     margin-right: 10px;
 }
+
+.checklist-list {
+    padding: 0;
+    margin: 20px 0;
+}
+.checklist-list li {
+    display: block;
+}
+.checklist-list h3 {
+    margin-bottom: 0;
+}
+.checklist-list time {
+    font-weight: normal;
+    color: #aaa;
+    display: inline-block;
+    margin-left: 10px;
+    font-size: 18px;
+    line-height: 26px;
+}
+.checklist-list .rating {
+    display: inline-block;
+    margin-left: 10px;
+}
