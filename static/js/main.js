@@ -54,7 +54,7 @@ function clone_checklist(id)
                 success:function(data){
 
                     window.location.href = '/checklist/' + id + '/update/';
-                    alert('fuck you!');
+                   // alert('fuck you!');
                 }
             });
 }
