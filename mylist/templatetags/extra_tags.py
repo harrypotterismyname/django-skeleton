@@ -13,19 +13,19 @@ def row_grade(grade):
 
 import  datetime
 @register.filter
-def remain_date(t):
-    if t:
+def remain_date(value):
+    if value:
         strDay = ' days'
-        if datetime.timedelta(t).days == 1:
+        if value.days == 1:
             strDay = ' day'
 
         strHour = ' hours'
-        hours = int(t.seconds / 3600)
+        hours = int(value.seconds / 3600)
         if hours == 1:
             strHour = ' hour'
 
-        if t.days:
-            return str(t.days) + strDay + ', ' + str(hours) + strHour
+        if value.days:
+            return str(value.days) + strDay + ', ' + str(hours) + strHour
 
         return str(hours) + strHour
     else:

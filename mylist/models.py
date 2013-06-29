@@ -5,7 +5,7 @@ from django.utils import timezone
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
 from userena.utils import user_model_label
-
+from django.utils.timezone import utc
 
 class CheckList(models.Model):
     title = models.CharField(_('Title'), max_length=255)
@@ -70,7 +70,8 @@ class Task(models.Model):
 
     def remain_date(self):
         if not self.is_overdated():
-            return datetime.datetime.now() - (self.start_at + datetime.timedelta(days=self.due_date))
+            now = datetime.datetime.utcnow().replace(tzinfo=utc)
+            return (self.start_at + datetime.timedelta(days=self.due_date)) - now
         return None
 
     class Meta:

@@ -135,6 +135,10 @@ fieldset legend {
     margin-left: 35px;
 }
 
+.task-list .over-dated{
+    color: #ff0000;
+}
+
 .task-metadata {
     font-family: "Segoe UI Light", "SegoeUILight", "Helvetica Neue", "Helvetica", Arial, sans-serif;
     font-size: 24px;
