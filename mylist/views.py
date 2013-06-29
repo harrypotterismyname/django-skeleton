@@ -51,6 +51,19 @@ class DetailView(DetailView):
     pk_url_kwarg = 'id'
     context_object_name = 'checklist'
 
+    def get_context_data(self, **kwargs):
+        context = super(DetailView, self).get_context_data(**kwargs)
+
+        id = self.kwargs.get('id')
+        context['tasks'] = Task.objects.filter(is_deleted=False, check_list__public=True, check_list__id=id)
+
+        return context
+
+
+class UpdateTaskView(FormView):
+    #model = Task
+    template_name = "mylist/ajax-result.html"
+
 
 class AddNewView(FormView):
     model = CheckList

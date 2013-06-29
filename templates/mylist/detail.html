@@ -26,8 +26,10 @@
             {% if tasks %}
                 <ul class="task-list">
                 {% for task in tasks %}
+
                     <li>
-                        <input type="checkbox" class="task" value="1" name="t1" {% if task.is_checked %}checked="true"{% endif %} data-label="{{ task.title }}">
+
+                        <input type="checkbox" id="task_{{ task.id }}" class="task" value="1" name="t1" {% if task.is_checked %}checked="true"{% endif %} data-label="{{ task.title }}">
                         {% if task.is_overdated == True %}<p class="remain over-dated">Overdated</p>{% else %}<div class="remain">next {{ task.remain_date|remain_date }}</div>{% endif %}
                     </li>
 
@@ -66,5 +68,23 @@
             color: 'green'
         });
     });
+
+    $('input.task').on('change', checked);
+
+    function checked() {
+        var id = $(this).attr('id').split('_')[1];
+
+        if(id != ""){
+            $.ajax({
+                type:'POST',
+                url:'/task/' + id +'/update/',
+                data:'value=' + $(this).is(':checked'),
+                success:function(data){
+                    console.log("success");
+                }
+            });
+        }
+        console.log( $(this).is(':checked'));
+    }
     </script>
 {% endblock %}
