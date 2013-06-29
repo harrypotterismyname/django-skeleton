@@ -55,17 +55,22 @@ button.btn-nude:active {
 }
 
 @font-face {
-  font-family: 'SegoeUILight';
-  src: url('../font/segoeuil.eot');
-  src: url('../font/segoeuil.eot') format('embedded-opentype'),
-  url('../font/segoeuil.woff') format('woff'),
-  url('../font/segoeuil.ttf') format('truetype'),
-  url('../font/segoeuil.svg') format('svg');
-  font-weight: normal;
-  font-style: normal;
+    font-family: 'SegoeUILight';
+    src: url('../font/segoeuil.eot');
+    src: url('../font/segoeuil.eot?#iefix') format('embedded-opentype'),
+    url('../font/segoeuil.woff') format('woff'),
+    url('../font/segoeuil.ttf') format('truetype'),
+    url('../font/segoeuil.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
 }
 
 h1, h2, h3 {
     font-family: "Segoe UI Light", "SegoeUILight", "Helvetica Neue", "Helvetica", Arial, sans-serif;
     margin-bottom: 30px;
+    font-weight: normal;
+}
+
+fieldset legend {
+    font-family: "Segoe UI Light", "SegoeUILight", "Helvetica Neue", "Helvetica", Arial, sans-serif;
 }
