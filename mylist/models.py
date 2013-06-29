@@ -14,6 +14,7 @@ class CheckList(models.Model):
 
     is_deleted = models.BooleanField(_('Deleted'), default=False)
     created_at = models.DateTimeField(_('Created at'), null=True, auto_now_add=True)
+    public = models.BooleanField(_('Public'), default=False)
 
     def __unicode__(self):
         return self.title

@@ -10,27 +10,33 @@
             <h1>{% trans "My Checklist" %}</h1>
             <ul class="nav nav-pills">
                 <li class="active">
-                    <a href="#">Upcoming</a>
+                    <a href="/">Upcoming</a>
                 </li>
                 <li>
-                    <a href="#">Recent</a>
+                    <a href="/?order=recent">Recent</a>
                 </li>
             </ul>
 
             <hr>
 
-            <ul class="checklist-list">
-                {% for item in items %}
-                <li>
-                    <h3><a href="{{ item.get_url }}">{{ item.title }}</h3>
-                    <p>
-                        <span class="badge badge-important">{{ item.count_task }} tasks</span>
-                        <span class="badge"><i class="icon-share-alt"></i></span>
-                        <time>3 day ago</time>
-                    </p>
-                </li>
-                {% endfor %}
-            </ul>
+            {% if items %}
+                <ul class="checklist-list">
+                    {% for item in items %}
+                    <li>
+                        <h3><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></h3>
+                        <p>
+                            <span class="badge badge-important">{{ item.count_task }} task{{ item.count_task|pluralize }}</span>
+                            {% if item.public %}
+                                <span class="badge"><i class="icon-share-alt"></i></span>
+                            {% endif %}
+                            <time>{{ item.created_at|timesince }} ago</time>
+                        </p>
+                    </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-error">No items.</p>
+            {% endif %}
 
             <hr>
             <ul class="pager">

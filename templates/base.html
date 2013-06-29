@@ -49,6 +49,10 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a href="{% url 'userena_profile_detail' request.user.username %}">{% trans 'Profile' %}</a></li>
+                                {% if request.user.is_staff %}
+                                    <li><a href="{% url 'admin:index' %}">{% trans 'Admin' %}</a></li>
+                                {% endif %}
+                                <li class="divider"></li>
                                 <li><a href="{% url 'userena_signout' %}">{% trans 'Logout' %}</a></li>
                             </ul>
                         </li>

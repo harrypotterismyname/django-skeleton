@@ -5,11 +5,15 @@ from mylist.models import CheckList
 
 
 class HomeIndex(ListView):
-    model = CheckList
     template_name = "mylist/home.html"
     context_object_name = 'items'
+    queryset = CheckList.objects.filter(is_deleted=False)   # TODO: order by upcoming tasks
 
-    #queryset = CheckList.objects.filter()
+    def get(self, request, *args, **kwargs):
+        order = request.GET.get('order', None)
+        if order == 'recent':
+            self.queryset = CheckList.objects.filter(is_deleted=False)
+        return super(HomeIndex, self).get(request)
 
 
 class PublicView(ListView):
