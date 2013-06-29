@@ -59,7 +59,8 @@
                         <li><a href="{% url 'userena_signup' %}">{% trans "Create New Account" %}</a></li>
                     </ul>
                 {% endif %}
-                <a href="" class="btn btn-danger pull-right" style="margin-right: 10px;">
+
+                <a href="{% url 'mylist:add' %}" class="btn btn-danger pull-right" style="margin-right: 10px;">
                     <i class="icon-plus-sign"></i> Add New
                 </a>
             </div>

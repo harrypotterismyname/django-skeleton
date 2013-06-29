@@ -1,4 +1,5 @@
 from django.views.generic import TemplateView, ListView
+from django.views.generic.edit import CreateView
 from mylist.models import CheckList
 
 
@@ -16,4 +17,9 @@ class PublicView(ListView):
 
 class DetailView(TemplateView):
     template_name = "mylist/detail.html"
+
+
+class AddNewView(CreateView):
+    model = CheckList
+    template_name = "mylist/new.html"
 
