@@ -31,8 +31,8 @@
             <div class="nav-collapse collapse">
                 <ul class="nav">
                     <li class="divider-vertical"></li>
-                    <li><a href="/">{% trans 'My Checklist' %}</a></li>
-                    <li><a href="">{% trans 'Public' %}</a></li>
+                    <li><a href="{% url 'mylist:index' %}">{% trans 'My Checklist' %}</a></li>
+                    <li><a href="{% url 'mylist:public' %}">{% trans 'Public' %}</a></li>
                 </ul>
 
                 <form class="navbar-search" action="">

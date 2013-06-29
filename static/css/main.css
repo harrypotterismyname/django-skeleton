@@ -100,3 +100,7 @@ fieldset legend {
     font-size: 18px;
     line-height: 26px;
 }
+.checklist-list .rating {
+    display: inline-block;
+    margin-left: 10px;
+}
