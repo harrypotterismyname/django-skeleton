@@ -1,4 +1,5 @@
 from django.views.generic import TemplateView, ListView
+from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 from mylist.models import CheckList
 
@@ -17,10 +18,11 @@ class PublicView(ListView):
     context_object_name = 'items'
 
 
-class DetailView(TemplateView):
+class DetailView(DetailView):
     model = CheckList
     template_name = "mylist/detail.html"
     slug_field = 'slug'
+    pk_url_kwarg = 'id'
     context_object_name = 'checklist'
 
 

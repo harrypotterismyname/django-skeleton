@@ -1,15 +1,19 @@
 from django.contrib import admin
-from mylist.models import *
+from mylist.models import CheckList, Task, UserCheckList
+
 
 class CheckListAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('title', 'rate', 'owner', '')
 
-admin.site.register(CheckList, CheckListAdmin)
 
 class TaskAdmin(admin.ModelAdmin):
     pass
-admin.site.register(Task, TaskAdmin)
+
 
 class UserCheckListAdmin(admin.ModelAdmin):
     pass
+
+
+admin.site.register(CheckList, CheckListAdmin)
+admin.site.register(Task, TaskAdmin)
 admin.site.register(UserCheckList, UserCheckListAdmin)

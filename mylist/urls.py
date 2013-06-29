@@ -7,6 +7,6 @@ urlpatterns = patterns('mylist.views',
     url('^public/$', PublicView.as_view(), name='public'),
     url('^add/$', LR(AddNewView.as_view()), name='add'),
 
-    url('^checklist/(?P<slug>[-_\w]+)/$', DetailView.as_view(), name='detail'),
+    url('^checklist/(?P<slug>[-_\w]+)/(?P<id>[+d])/$', DetailView.as_view(), name='detail'),
 
 )
