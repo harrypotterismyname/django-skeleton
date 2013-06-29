@@ -12,3 +12,8 @@ class PublicView(ListView):
     model = CheckList
     template_name = "mylist/public.html"
     context_object_name = 'items'
+
+
+class DetailView(TemplateView):
+    template_name = "mylist/detail.html"
+
