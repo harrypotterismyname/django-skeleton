@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load i18n webdesign %}
-
+{% load extra_tags %}
 {% block title %}{{ checklist.title }}{% endblock %}
 
 {% block content %}
@@ -20,20 +20,17 @@
             </div>
             <div class="clearfix"></div>
             <hr>
+            {% if tasks %}
+                <ul class="task-list">
+                {% for task in tasks %}
+                    <li>
+                        <input type="checkbox" class="task" value="1" name="t1" {% if task.is_checked %}checked="true"{% endif %} data-label="{{ task.title }}">
+                        {% if task.is_overdated == True %}<p class="remain over-dated">Overdated</p>{% else %}<div class="remain">next {{ task.remain_date|remain_date }}</div>{% endif %}
+                    </li>
 
-            <ul class="task-list">
-                <li>
-                    <input type="checkbox" class="task" value="1" name="t1" data-label="{% lorem 5 w random %}">
-                    <div class="remain">next 2 days, 3 hours</div>
-                </li>
-                <li>
-                    <input type="checkbox" class="task" value="1" name="t2" data-label="{% lorem 6 w random %}">
-                </li>
-                <li>
-                    <input type="checkbox" class="task" value="1" name="t3" data-label="{% lorem 4 w random %}">
-                </li>
-            </ul>
-
+                {% endfor %}
+                </ul>
+            {% endif %}
             <hr>
             {% if checklist.public %}
             <div class="task-metadata">
