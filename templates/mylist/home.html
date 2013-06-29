@@ -7,6 +7,48 @@
 <div class="container">
     <div class="row">
         <div class="span12">
+            <h1>{% trans "My Checklist" %}</h1>
+            <ul class="nav nav-pills">
+                <li class="active">
+                    <a href="#">Upcoming</a>
+                </li>
+                <li>
+                    <a href="#">Recent</a>
+                </li>
+            </ul>
+
+            <hr>
+
+            <ul class="checklist-list">
+                <li>
+                    <h3><a href="">{% lorem 5 w random %}</a></h3>
+                    <p>
+                        <span class="badge badge-important">3 tasks</span>
+                        <span class="badge"><i class="icon-share-alt"></i></span>
+                        <time>3 day ago</time>
+                    </p>
+                </li>
+                <li>
+                    <h3><a href="">{% lorem 5 w random %}</a></h3>
+                    <p>
+                        <span class="badge badge-important">3 tasks</span>
+                        <time>3 day ago</time>
+                    </p>
+                </li>
+                <li>
+                    <h3><a href="">{% lorem 5 w random %}</a></h3>
+                    <p>
+                        <span class="badge badge-important">3 tasks</span>
+                        <time>3 day ago</time>
+                    </p>
+                </li>
+            </ul>
+
+            <hr>
+            <ul class="pager">
+                <li><a href="#"><i class="icon-arrow-left"></i></a></li>
+                <li><a href="#"><i class="icon-arrow-right"></i></a></li>
+            </ul>
         </div>
     </div>
 </div>
