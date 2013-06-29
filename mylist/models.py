@@ -3,13 +3,16 @@ from django.utils.translation import ugettext_lazy as _
 from userena.utils import user_model_label
 from django.template.defaultfilters import slugify
 
+
 class CheckList(models.Model):
-    id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=1024, blank=True)
     slug = models.CharField(max_length=512, blank=True)
     created_at = models.DateTimeField(null=True, auto_now_add=True)
+    grade = models.FloatField(null=True,blank=True)
     is_deleted = models.BooleanField(default=False)
 
+    def __unicode__(self):
+        return self.title
 
     def get_by_id(self, id):
         return self.objects.get(id=id)
@@ -59,6 +62,7 @@ class CheckList(models.Model):
     def count_task(self):
         return Task.objects.filter(is_check_list=self.id).count()
 
+
 @classmethod
 def generate_slug(self, name):
     count = 1
@@ -77,13 +81,16 @@ def generate_slug(self, name):
         count += 1 # + 1
     return slug
 
+
 class Task(models.Model):
-    id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=1024, blank=True)
     is_checked = models.BooleanField(default=False)
     is_deleted = models.BooleanField(default=False)
-    id_check_list = models.ForeignKey(CheckList, null=True)
+    check_list = models.ForeignKey(CheckList, null=True)
     parent = models.ForeignKey('self', null=True, blank=True)
+
+    def __unicode__(self):
+        return self.title
 
     def get_by_id(self):
         return self.objects.filter(id=id)
