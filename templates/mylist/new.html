@@ -11,14 +11,15 @@
             <hr>
             <form action="" method="post" class="form-horizontal">{% csrf_token %}
                 <div class="row" ng-app ng-controller="TaskCtrl">
-                    <div class="span6">
+                    <div class="span5">
                         {{ form|bootstrap }}
                     </div>
-                    <div class="span6">
+                    <div class="span7">
                         {% verbatim %}
                         <ul class="new-task-list">
                             <li ng-repeat="i in tasks" id="task-{{ i }}">
                                 <input type="text" name="title{{ i }}" class="span3" placeholder="Task title">
+                                <input type="text" name="start{{ i }}" class="span2" placeholder="Start at">
                                 <input type="text" name="due{{ i }}" class="span2" placeholder="Complete on"> days
                             </li>
                         </ul>
