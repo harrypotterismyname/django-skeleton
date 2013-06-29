@@ -66,7 +66,7 @@ class AddNewView(FormView):
         if num_task:
             for i in range(1, int(num_task)):
                 t = request.POST.get('title%d' % i, '')
-                d = request.POST.get('due%d' % i, '')
+                d = request.POST.get('due%d' % i, None)
                 if t:
                     tasks.append([t, d])
 
@@ -78,7 +78,10 @@ class AddNewView(FormView):
             count = 0
             for t in tasks:
                 count += 1
-                Task.objects.create(title=t[0], check_list=new, due_date=t[1], order=count)
+                if t[1]:
+                    Task.objects.create(title=t[0], check_list=new, due_date=t[1], order=count)
+                else:
+                    Task.objects.create(title=t[0], check_list=new, order=count)
 
             return HttpResponseRedirect(new.get_absolute_url())
 
