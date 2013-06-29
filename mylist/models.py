@@ -10,6 +10,9 @@ class CheckList(models.Model):
     created_at = models.DateTimeField(null=True, auto_now_add=True)
     grade = models.FloatField(null=True,blank=True)
     is_deleted = models.BooleanField(default=False)
+    users = models.ManyToManyField(user_model_label, through='UserCheckList')
+    owner = models.ForeignKey(user_model_label, null=True, related_name='owner')
+
 
     def __unicode__(self):
         return self.title
@@ -108,4 +111,9 @@ class Task(models.Model):
         self.parent = task.parent
         return  self
 
+
+class UserCheckList(models.Model):
+    user = models.ForeignKey(user_model_label)
+    checklist = models.ForeignKey(CheckList)
+   # is_owner = models.BooleanField(default=False)
 

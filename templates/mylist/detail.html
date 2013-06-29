@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load i18n webdesign %}
 
-{% block title %}Detail{% endblock %}
+{% block title %}{{ checklist.title }}{% endblock %}
 
 {% block content %}
 <div class="container">
@@ -9,7 +9,7 @@
         <div class="span12">
             <a href="" class="btn btn-warning pull-right btn-fork-task"><i class="icon-ok"></i> Fork this</a>
 
-            <h2 class="task-title">{% lorem 5 w random %}</h2>
+            <h2 class="task-title">{{ checklist.title }}</h2>
 
             <div class="task-rating pull-left">
                 <i class="icon-star"></i>
@@ -35,13 +35,16 @@
             </ul>
 
             <hr>
+            {% if checklist.public %}
             <div class="task-metadata">
-                <p>by <a href="">admin</a></p>
+                <p>by <a href="">{{ checklist.owner.username }}</a></p>
+
                 <p>5 days ago</p>
                 <p>30 people rated</p>
                 <p>200 views</p>
                 <p>3 forks</p>
             </div>
+            {% endif %}
         </div>
     </div>
 </div>

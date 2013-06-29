@@ -18,7 +18,10 @@ class PublicView(ListView):
 
 
 class DetailView(TemplateView):
+    model = CheckList
     template_name = "mylist/detail.html"
+    slug_field = 'slug'
+    context_object_name = 'checklist'
 
 
 class AddNewView(CreateView):
