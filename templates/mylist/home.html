@@ -9,11 +9,14 @@
         <div class="span12">
             <h1>{% trans "My Checklist" %}</h1>
             <ul class="nav nav-pills">
-                <li class="active">
+                <li {% if not active %}class="active"{% endif %}>
                     <a href="/">Upcoming</a>
                 </li>
-                <li>
+                <li {% if active == 'recent' %}class="active"{% endif %}>
                     <a href="/?order=recent">Recent</a>
+                </li>
+                <li {% if active == 'overdated' %}class="active"{% endif %}>
+                    <a href="/?order=overdated">Overdated</a>
                 </li>
             </ul>
 
@@ -41,10 +44,10 @@
             <hr>
             <ul class="pager">
                 <li class="previous">
-                    <a href="#"><i class="icon-arrow-left"></i></a>
+                    <a href="#"><i class="icon-arrow-left"></i> {% trans 'Prev' %}</a>
                 </li>
                 <li class="next">
-                    <a href="#"><i class="icon-arrow-right"></i></a>
+                    <a href="#">{% trans 'Next' %} <i class="icon-arrow-right"></i></a>
                 </li>
             </ul>
         </div>

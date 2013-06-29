@@ -26,7 +26,7 @@
             <ul class="checklist-list">
                 {% for item in items %}
                     <li>
-                        <h3><a href="{{ item.get_url }}">{{ item.title }}</h3>
+                        <h3><a href="{{ item.get_url }}">{{ item.title }}</a></h3>
                         <p>
                             <span class="badge badge-important">{{ item.count_task }} tasks</span>
                             <span class="badge"><i class="icon-share-alt"></i></span>
@@ -47,10 +47,10 @@
             <hr>
             <ul class="pager">
                 <li class="previous">
-                    <a href="#"><i class="icon-arrow-left"></i></a>
+                    <a href="#"><i class="icon-arrow-left"></i> {% trans 'Prev' %}</a>
                 </li>
                 <li class="next">
-                    <a href="#"><i class="icon-arrow-right"></i></a>
+                    <a href="#">{% trans 'Next' %} <i class="icon-arrow-right"></i></a>
                 </li>
             </ul>
         </div>

@@ -142,3 +142,11 @@ h2.task-title {
 .btn-fork-task {
     margin-top: 20px;
 }
+
+
+/* RESPONSIVE */
+@media (max-width: 979px) {
+  body {
+    padding-top: 0 !important;
+  }
+}
