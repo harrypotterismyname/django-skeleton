@@ -11,15 +11,14 @@
             <hr>
             <form action="" method="post" class="form-horizontal">{% csrf_token %}
                 <div class="row" ng-app ng-controller="TaskCtrl">
-                    <div class="span5">
+                    <div class="span6">
                         {{ form|bootstrap }}
                     </div>
-                    <div class="span7">
+                    <div class="span6">
                         {% verbatim %}
                         <ul class="new-task-list">
                             <li ng-repeat="i in tasks" id="task-{{ i }}">
                                 <input type="text" name="title{{ i }}" class="span3" placeholder="Task title">
-                                <input type="text" name="start{{ i }}" class="span2" placeholder="Start at">
                                 <input type="text" name="due{{ i }}" class="span2" placeholder="Complete on"> days
                             </li>
                         </ul>
@@ -42,12 +41,17 @@
 {% endblock %}
 
 {% block extra_css %}
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}datepicker/datepicker.css">
 {% endblock %}
 
 {% block extra_js %}
     <script type="text/javascript" src="{{ STATIC_URL }}js/angular.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}datepicker/bootstrap-datepicker.js"></script>
     <script type="text/javascript">
     $(function(){
+        $('#id_start_at').datepicker({
+            format: "dd/mm/yyyy"
+        });
     });
 
     function TaskCtrl($scope) {

@@ -13,6 +13,7 @@ class CheckList(models.Model):
 
     rate = models.FloatField(_('Rate'), null=True, blank=True)
     owner = models.ForeignKey(user_model_label, null=True, related_name='owner', verbose_name=_('Owner'))
+    start_at = models.DateTimeField(_('Start at'))
 
     is_deleted = models.BooleanField(_('Deleted'), default=False)
     created_at = models.DateTimeField(_('Created at'), null=True, auto_now_add=True)
@@ -44,7 +45,6 @@ class Task(models.Model):
     check_list = models.ForeignKey(CheckList, related_name='tasks', verbose_name=_('Checklist'))
     parent = models.ForeignKey('self', null=True, blank=True, related_name='children', verbose_name=_('Parent'))
 
-    start_at = models.DateTimeField(_('Start at'), blank=True, null=True)
     due_date = models.PositiveSmallIntegerField(_('Due date'), default=0)
 
     is_checked = models.BooleanField(_('Checked'), default=False)
@@ -64,15 +64,15 @@ class Task(models.Model):
         return self.get_by_is_checked().count()
 
     def is_overdated(self):
-        if self.start_at and self.due_date > 0:
-            if (self.start_at + datetime.timedelta(days=self.due_date)) < timezone.now():
+        if self.check_list.start_at and self.due_date > 0:
+            if (self.check_list.start_at + datetime.timedelta(days=self.due_date)) < timezone.now():
                 return True
         return False
 
     def remain_date(self):
         if not self.is_overdated():
             now = datetime.datetime.utcnow().replace(tzinfo=utc)
-            return (self.start_at + datetime.timedelta(days=self.due_date)) - now
+            return (self.check_list.start_at + datetime.timedelta(days=self.due_date)) - now
         return None
 
     class Meta:

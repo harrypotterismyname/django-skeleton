@@ -5,4 +5,4 @@ from mylist.models import CheckList
 class ChecklistForm(forms.ModelForm):
     class Meta:
         model = CheckList
-        fields = ['title', 'public']
+        fields = ['title', 'start_at', 'public']

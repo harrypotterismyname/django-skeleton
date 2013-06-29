@@ -1,4 +1,6 @@
+import datetime
 from django.http import HttpResponseRedirect
+from django.utils import timezone
 from django.views.generic import TemplateView, ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormView
@@ -57,6 +59,7 @@ class AddNewView(FormView):
 
     def post(self, request, *args, **kwargs):
         title = request.POST.get('title', None)
+        start_at = request.POST.get('start_at', timezone.now())
         public = request.POST.get('public', False)
         num_task = request.POST.get('num_task', None)
         tasks = []
@@ -68,7 +71,8 @@ class AddNewView(FormView):
                     tasks.append([t, d])
 
         if title:
-            new = self.model.objects.create(title=title, owner=request.user, public=public)
+            start_at = datetime.datetime.combine(datetime.datetime.strptime(start_at, "%d/%m/%Y"), datetime.time(0, 0))
+            new = self.model.objects.create(title=title, owner=request.user, public=public, start_at=start_at)
 
             # create tasks
             count = 0
