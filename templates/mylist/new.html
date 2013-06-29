@@ -10,11 +10,23 @@
             <h1>{% trans "Add New Checklist" %}</h1>
             <hr>
             <form action="" method="post" class="form-horizontal">{% csrf_token %}
-                <div class="row">
+                <div class="row" ng-app ng-controller="TaskCtrl">
                     <div class="span6">
                         {{ form|bootstrap }}
                     </div>
-                    <div class="span6">/</div>
+                    <div class="span6">
+                        {% verbatim %}
+                        <ul class="new-task-list">
+                            <li ng-repeat="i in tasks" id="task-{{ i }}">
+                                <input type="text" name="title{{ i }}" class="span3" placeholder="Task title">
+                                <input type="text" name="due{{ i }}" class="span2" placeholder="Complete on"> days
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                        <input type="hidden" name="num_task" value="{{ tasks.length }}">
+                        <a ng-click="addLine()" class="btn-naked btn-add-task-line"><i class="icon-plus-sign icon-2x"></i></a>
+                        {% endverbatim %}
+                    </div>
                 </div>
 
                 <div class="form-actions">
@@ -32,8 +44,18 @@
 {% endblock %}
 
 {% block extra_js %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/angular.min.js"></script>
     <script type="text/javascript">
     $(function(){
     });
+
+    function TaskCtrl($scope) {
+        $scope.tasks = [1, 2];
+
+        $scope.addLine = function() {
+            var i = $scope.tasks[$scope.tasks.length-1] + 1;
+            $scope.tasks.push(i);
+        };
+    }
     </script>
 {% endblock %}
