@@ -30,10 +30,10 @@
             {% endif %}
         {% endblock %}
 
-        <div id="details">
+        <img class="img-rounded pull-right avatar" src="{{ profile.get_mugshot_url }}" alt="{% trans "Your mugshot" %}">
+        <div class="well">
             {% block profile_details %}
-                <img class="img-rounded" src="{{ profile.get_mugshot_url }}" alt="{% trans "Your mugshot" %}">
-                <dl>
+                <dl class="dl-horizontal">
                     {% block profile_definition_list %}
                         {% if profile.user.get_full_name %}
                             <dt>{% trans "Name" %}</dt>
