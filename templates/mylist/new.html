@@ -9,7 +9,7 @@
         <div class="span12">
             <h1>{% trans "Add New Checklist" %}</h1>
             <hr>
-            <form action="" method="post" class="form-horizontal">{% csrf_token %}
+            <form action="" method="post" class="">{% csrf_token %}
                 <div class="row" ng-app ng-controller="TaskCtrl">
                     <div class="span6">
                         {{ form|bootstrap }}
