@@ -11,4 +11,16 @@
     a.checked {
         display: none !important;
     }
+    .prettycheckbox.green a, .prettyradio.green a {
+        display: none;
+    }
+    .btn-fork-task {
+        display: none;
+    }
+
+    .prettycheckbox label, .prettyradio label {
+        display: block;
+        line-height: 30px;
+        padding-left: 35px;
+    }
 }
