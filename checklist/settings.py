@@ -90,6 +90,7 @@ INSTALLED_APPS = (
     'bootstrapform',
     'profiles',
     'mylist',
+    'easy_thumbnails',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (

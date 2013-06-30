@@ -54,9 +54,11 @@
 .prettycheckbox label,
 .prettyradio label {
   display: block;
-  float: left;
-  margin: 6px 5px;
+  box-sizing: border-box;
   cursor: pointer;
+    line-height: 30px;
+    padding-left: 30px;
+    vertical-align: middle;
 }
 
 .prettycheckbox.disabled a,
