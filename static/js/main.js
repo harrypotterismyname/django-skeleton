@@ -53,7 +53,7 @@ function clone_checklist(id)
 
                 success:function(data){
 
-                    window.location.href = '/checklist/' + id + '/update/';
+                    window.location.href = '/checklist/' + data['new_checklist_id'] + '/update/';
                    // alert('fuck you!');
                 }
             });
