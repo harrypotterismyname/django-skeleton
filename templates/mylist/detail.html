@@ -4,69 +4,127 @@
 {% block title %}{{ checklist.title }}{% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="row">
-        <div class="span12">
+    <div class="container">
+        <div class="row">
+            <div class="span12">
 
-            {% if request.user == checklist.owner %}
-                <a href="{% url 'mylist:update' checklist.id %}" class="btn btn-success pull-right btn-fork-task"><i class="icon-pencil"></i></a>
-            {% else %}
-                <a href="javascript:clone_checklist('{{ checklist.id }}');" class="btn btn-warning pull-right btn-fork-task"><i class="icon-ok"></i> Fork this</a>
-            {% endif %}
-            <a href="javascript:" onclick="window.print();" class="btn btn-success pull-right btn-fork-task"><i class="icon-print"></i></a>
+                {% if request.user == checklist.owner %}
+                    <a href="{% url 'mylist:update' checklist.id %}" class="btn btn-success pull-right btn-fork-task"><i
+                            class="icon-pencil"></i></a>
+                {% elif request.user %}
+                    <a href="javascript:clone_checklist({{ checklist.id }});"
+                       class="btn btn-warning pull-right btn-fork-task"><i class="icon-ok"></i> Fork this</a>
+                {% endif %}
+                <a href="javascript:" onclick="window.print();" class="btn btn-success pull-right btn-fork-task"><i
+                        class="icon-print"></i></a>
 
-            <h2 class="task-title">{{ checklist.title }}</h2>
+                <h2 class="task-title">{{ checklist.title }}</h2>
 
-            <div class="task-rating pull-left">
-                <i class="icon-star"></i>
-                <i class="icon-star"></i>
-                <i class="icon-star"></i>
-                <i class="icon-star"></i>
-                <i class="icon-star-half-empty"></i>
+                <div class="task-rating pull-left">
+                    <i class="icon-star"></i>
+                    <i class="icon-star"></i>
+                    <i class="icon-star"></i>
+                    <i class="icon-star"></i>
+                    <i class="icon-star-half-empty"></i>
+                </div>
+                <div class="clearfix"></div>
+                <hr>
+                {% if tasks %}
+                    <div class="error" id="msg-error"></div>
+                    <ul class="task-list">
+                        {% for task in tasks %}
+
+                            <li>
+                                <div class="task-contain">
+                                    <input type="checkbox" id="task_{{ task.id }}" class="task" value="1" name="t1"
+                                           {% if task.is_checked %}checked="true"{% endif %}
+                                           data-label="{{ task.title }}"/>
+
+                                    <div>
+
+                                        <div class="pull-left">
+                                            {% if task.is_overdated == True %}<p class="remain pull-left over-dated">
+                                                Overdated</p>
+                                                {% elif task.remain_date.days > 0 or task.remain_date.seconds > 3600 %}
+                                                <div class="remain">
+                                                next {{ task.remain_date|remain_date }}</div>{% endif %}
+                                        </div>
+
+                                        {% if request.user == checklist.owner %}
+                                            <div class="pull-left icon-edit task-edit-bt" id="btedit_{{ task.id }}"
+                                                 title="Edit" onclick="ShowEditPopup({{ task.id }},'{{ task.title }}')">
+                                            </div>
+                                        {% endif %}
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                                {% if task.get_child_task.count %}
+                                    <ul>
+                                        {% for child_task in task.get_child_task %}
+                                            <li>
+                                                <div class="task-contain">
+                                                    <input type="checkbox" id="task_{{ child_task.id }}"
+                                                           class="task child_task" value="1" name="tl"
+                                                           {% if child_task.is_checked %}checked="true" {% endif %}
+                                                           data-label="{{ child_task.title }}"/>
+
+                                                    <div>
+
+                                                        <div class="pull-left">
+                                                            {% if task.is_overdated == True %}
+                                                                <p class="remain pull-left over-dated">Overdated</p>
+                                                                {% elif task.remain_date.days > 0 or task.remain_date.seconds > 3600 %}
+                                                                <div class="remain">
+                                                                next {{ task.remain_date|remain_date }}</div>{% endif %}
+                                                        </div>
+
+                                                        {% if request.user == checklist.owner %}
+                                                            <div class="pull-left  icon-edit task-edit-bt" title="Edit"
+                                                                 id="btedit_{{ child_task.id }}" title="Edit"
+                                                                 onclick="ShowEditPopup({{ child_task.id }},'{{ child_task.title }}')">
+                                                            </div>
+                                                        {% endif %}
+
+                                                        <div class="clearfix"></div>
+                                                    </div>
+
+                                                </div>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </li>
+
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                <hr>
+                {% if checklist.public %}
+                    <div class="task-metadata">
+                        <p>by <a
+                                href="{% url 'userena_profile_detail' checklist.owner.username %}">{{ checklist.owner.username }}</a>
+                        </p>
+
+                        <p>{{ checklist.created_at|timesince }} ago</p>
+
+                        <p>30 people rated</p>
+
+                        <p>200 views</p>
+
+                        <p>3 forks</p>
+                    </div>
+                {% else %}
+                    <div class="task-metadata">
+                        <p>by <a
+                                href="{% url 'userena_profile_detail' checklist.owner.username %}">{{ checklist.owner.username }}</a>
+                        </p>
+
+                        <p>{{ checklist.created_at|timesince }} ago</p>
+                    </div>
+                {% endif %}
             </div>
-            <div class="clearfix"></div>
-            <hr>
-            {% if tasks %}
-                <ul class="task-list">
-                {% for task in tasks %}
-
-                    <li>
-                        <input type="checkbox" id="task_{{ task.id }}" class="task" value="1" name="t1" {% if task.is_checked %}checked="true"{% endif %} data-label="{{ task.title }}" />
-                        {% if task.is_overdated == True %}<p class="remain over-dated">Overdated</p>{% elif task.remain_date.days > 0 or task.remain_date.seconds > 3600 %}<div class="remain">next {{ task.remain_date|remain_date }}</div>{% endif %}
-
-                        {% if task.get_child_task.count %}
-                            <ul >
-                                {% for child_task in task.get_child_task %}
-                                    <li>
-                                        <input type="checkbox" id="task_{{ child_task.id }}" class="task child_task" value="1" name="tl" {% if child_task.is_checked %}checked="true" {% endif %} data-label="{{ child_task.title }}" />
-                                        {% if task.is_overdated == True %}<p class="remain over-dated">Overdated</p>{% elif task.remain_date.days > 0 or task.remain_date.seconds > 3600 %}<div class="remain">next {{ task.remain_date|remain_date }}</div>{% endif %}
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        {% endif %}
-                    </li>
-
-                {% endfor %}
-                </ul>
-            {% endif %}
-            <hr>
-            {% if checklist.public %}
-                <div class="task-metadata">
-                    <p>by <a href="{% url 'userena_profile_detail' checklist.owner.username %}">{{ checklist.owner.username }}</a></p>
-                    <p>{{ checklist.created_at|timesince }} ago</p>
-                    <p>30 people rated</p>
-                    <p>200 views</p>
-                    <p>3 forks</p>
-                </div>
-            {% else %}
-                <div class="task-metadata">
-                    <p>by <a href="{% url 'userena_profile_detail' checklist.owner.username %}">{{ checklist.owner.username }}</a></p>
-                    <p>{{ checklist.created_at|timesince }} ago</p>
-                </div>
-            {% endif %}
         </div>
     </div>
-</div>
 {% endblock %}
 
 {% block extra_css %}
@@ -77,33 +135,56 @@
 {% block extra_js %}
     <script type="text/javascript" src="{{ STATIC_URL }}prettyCheckable/prettyCheckable.js"></script>
     <script type="text/javascript">
-    $(function(){
-        var el = $('input.task');
-        el.prettyCheckable({
-            color: 'green'
+        $(function () {
+            var el = $('input.task');
+            el.prettyCheckable({
+                color: 'green'
+            });
+
+            {% if checklist.owner != user %}
+                el.attr("disabled", "disabled")
+            {% endif %}
         });
 
-        {% if checklist.owner != user %}
-            el.attr("disabled","disabled")
-        {% endif %}
-    });
 
-    $('input.task').on('change', checked);
-
-    function checked() {
-        var id = $(this).attr('id').split('_')[1];
-
-        if(id != ""){
-            $.ajax({
-                type:'POST',
-                url:'/ajax/task/' + id +'/update/',
-                data:'value=' + $(this).is(':checked'),
-                success:function(data){
-                    console.log("success");
-                }
-            });
+        function ShowEditPopup(id, title) {
+            var task_title = prompt(title, title);
+            if (task_title != null && task_title != "") {
+                $.ajax({
+                    type: 'POST',
+                    url: '/ajax/task/' + id + '/update/',
+                    data: 'title=' + task_title,
+                    success: function (data) {
+                        var obj = $.parseJSON(data);
+                        if(obj != '')
+                            if(obj.result != undefined && obj.result != '')
+                                window.location.reload();
+                        else{
+                                $("#msg-error").text("Error!")
+                            }
+                    }
+                });
+            }else{
+                  $("#msg-error").text("Error!")
+            }
         }
-        console.log( $(this).is(':checked'));
-    }
+
+        $('input.task').on('change', checked);
+
+        function checked() {
+            var id = $(this).attr('id').split('_')[1];
+
+            if (id != "") {
+                $.ajax({
+                    type: 'POST',
+                    url: '/ajax/task/' + id + '/update/',
+                    data: 'value=' + $(this).is(':checked'),
+                    success: function (data) {
+                        //console.log("success");
+                    }
+                });
+            }
+            console.log($(this).is(':checked'));
+        }
     </script>
 {% endblock %}

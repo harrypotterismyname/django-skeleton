@@ -63,8 +63,6 @@ class Task(models.Model):
 
 
     def save(self, *args, **kwargs):
-
-
         #calculate due date for tasks
         self.calculate_real_due_date()
 
@@ -79,10 +77,8 @@ class Task(models.Model):
         if self.due_date is None:
             self.due_date = 0
 
-
-
         if self.check_list.start_at:
-            self.real_due_date = self.check_list.start_at + datetime.timedelta(days=self.due_date )
+            self.real_due_date = self.check_list.start_at + datetime.timedelta(days=int(self.due_date))
             #self.save()
 
     def can_edit(self, user):

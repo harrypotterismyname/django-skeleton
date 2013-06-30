@@ -210,3 +210,23 @@ h2.task-title {
         top: 5px;
     }
 }
+
+.task-list .pull-left .remain{
+    line-height: 15px;
+}
+
+.task-edit-bt{
+    margin: 0 5px;
+    height: 15px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.task-contain .task-edit-bt{
+    visibility: hidden;
+}
+
+.task-contain:hover .task-edit-bt{
+    visibility: visible;
+}
