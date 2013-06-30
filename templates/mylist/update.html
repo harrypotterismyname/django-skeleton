@@ -11,32 +11,32 @@
             <hr>
             <form action="" method="post" class="form-horizontal">{% csrf_token %}
                 <div class="row" ng-app ng-controller="TaskCtrl">
-                    <div class="span6">
+                    <div class="span12">
                         {{ form|bootstrap }}
                     </div>
-                    <div class="span6">
-                        <ul class="new-task-list">
-                            {% for i in tasks %}
-                            <li id="task-{{ i.id }}">
-                                <input type="text" name="title{{ i.id }}" class="span3" placeholder="Task title" value="{{ i.title }}">
-                                <input type="text" name="due{{ i.id }}" class="span2" placeholder="Complete on" value="{{ i.due_date }}"> days
-                            </li>
-                            {% endfor %}
-
-                            {% verbatim %}
-                                <li ng-repeat="i in tasks" id="task-{{ i }}">
-                                    <input type="text" name="title{{ i }}" class="span3" placeholder="Task title">
-                                    <input type="text" name="due{{ i }}" class="span2" placeholder="Complete on"> days
-                                </li>
-                            {% endverbatim %}
-
-                        </ul>
-                        <div class="clearfix"></div>
-                        {% verbatim %}
-                            <input type="hidden" name="num_task" value="{{ tasks.length }}">
-                            <a ng-click="addLine()" class="btn-naked btn-add-task-line"><i class="icon-plus-sign icon-2x"></i></a>
-                        {% endverbatim %}
-                    </div>
+{#                    <div class="span6">#}
+{#                        <ul class="new-task-list">#}
+{#                            {% for i in tasks %}#}
+{#                            <li id="task-{{ i.id }}">#}
+{#                                <input type="text" name="title{{ i.id }}" class="span3" placeholder="Task title" value="{{ i.title }}">#}
+{#                                <input type="text" name="due{{ i.id }}" class="span2" placeholder="Complete on" value="{{ i.due_date }}"> days#}
+{#                            </li>#}
+{#                            {% endfor %}#}
+{##}
+{#                            {% verbatim %}#}
+{#                                <li ng-repeat="i in tasks" id="task-{{ i }}">#}
+{#                                    <input type="text" name="title{{ i }}" class="span3" placeholder="Task title">#}
+{#                                    <input type="text" name="due{{ i }}" class="span2" placeholder="Complete on"> days#}
+{#                                </li>#}
+{#                            {% endverbatim %}#}
+{##}
+{#                        </ul>#}
+{#                        <div class="clearfix"></div>#}
+{#                        {% verbatim %}#}
+{#                            <input type="hidden" name="num_task" value="{{ tasks.length }}">#}
+{#                            <a ng-click="addLine()" class="btn-naked btn-add-task-line"><i class="icon-plus-sign icon-2x"></i></a>#}
+{#                        {% endverbatim %}#}
+{#                    </div>#}
                 </div>
 
                 <div class="form-actions">
