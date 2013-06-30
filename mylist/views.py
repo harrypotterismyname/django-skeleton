@@ -83,9 +83,9 @@ class CloneChecklistView(View):
     def post(self, request, *args, **kwargs):
         checklist_id = kwargs.get('id')
         self.old_checklist = CheckList.objects.get(id=int(checklist_id))
-        new_checklist = request.user.profile.clone_checklist(self.old_checklist)
+        new_checklist_id = request.user.profile.clone_checklist(self.old_checklist)
 
-        return HttpResponse(simplejson.dumps({'new_checklist_id': str(new_checklist.id)}, ensure_ascii=False))
+        return HttpResponse(simplejson.dumps({'new_checklist_id': str(new_checklist_id)}, ensure_ascii=False))
 
 
 class UpdateTaskView(View):

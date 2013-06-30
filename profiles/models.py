@@ -35,4 +35,4 @@ class Profile(UserenaLanguageBaseProfile):
             new_task = Task(title=task.title, check_list=new_checklist, due_date=task.due_date, order=task.order)
             new_task.save()
 
-        return  new_checklist
+        return  new_checklist.id
