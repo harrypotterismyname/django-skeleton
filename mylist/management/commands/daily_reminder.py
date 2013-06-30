@@ -40,3 +40,6 @@ class Command( BaseCommand):
             msg = EmailMessage('[ChecklistSimply] Nhắc nhở bạn!',message, 'EduSmile Team <hong@vietnamdevelopers.com>',[ task.check_list.owner.email ])
             msg.content_subtype = "html"  # Main content is now text/html
             msg.send()
+
+            task.last_reminder = today
+            task.save()
