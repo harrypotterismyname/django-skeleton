@@ -50,6 +50,7 @@ class Task(models.Model):
 
     is_checked = models.BooleanField(_('Checked'), default=False)
     is_deleted = models.BooleanField(_('Deleted'), default=False)
+
     order = models.PositiveSmallIntegerField(_('Order'), default=0)
 
     def can_edit(self, user):
