@@ -45,7 +45,7 @@ class PublicView(ListView):
     model = CheckList
     template_name = "mylist/public.html"
     context_object_name = 'items'
-    queryset = CheckList.objects.filter( public = True)
+    queryset = CheckList.objects.filter(public=True, is_deleted=False)
 
 
 class DetailView(DetailView):
@@ -59,7 +59,7 @@ class DetailView(DetailView):
         context = super(DetailView, self).get_context_data(**kwargs)
 
         id = self.kwargs.get('id')
-        context['tasks'] = Task.objects.filter(is_deleted=False, check_list__id=id)
+        context['tasks'] = Task.objects.filter(is_deleted=False, check_list__id=id, parent__isnull=True)
 
         return context
 

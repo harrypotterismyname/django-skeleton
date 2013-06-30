@@ -29,21 +29,20 @@
                 <ul class="task-list">
                 {% for task in tasks %}
 
-                    <li   >
-
-
-                              {% if task.parent_id > 0 %}
-                                    <i class="" style="width: 18px;"> &nbsp; </i>
-
-                               {% else %}
-
-                            {% endif %}
-
-
-                        <input type="checkbox" id="task_{{ task.id }}" class="task" value="1" name="t1" {% if task.is_checked %}checked="true"{% endif %} data-label="{{ task.title }}">
+                    <li>
+                        <input type="checkbox" id="task_{{ task.id }}" class="task" value="1" name="t1" {% if task.is_checked %}checked="true"{% endif %} data-label="{{ task.title }}" />
                         {% if task.is_overdated == True %}<p class="remain over-dated">Overdated</p>{% else %}<div class="remain">next {{ task.remain_date|remain_date }}</div>{% endif %}
 
-
+                        {% if task.get_child_task.count %}
+                            <ul >
+                                {% for child_task in task.get_child_task %}
+                                    <li>
+                                        <input type="checkbox" id="task_{{ child_task.id }}" class="task child_task" value="1" name="tl" {% if child_task.is_checked %}checked="true" {% endif %} data-label="{{ child_task.title }}" />
+                                        {% if task.is_overdated == True %}<p class="remain over-dated">Overdated</p>{% else %}<div class="remain">next {{ task.remain_date|remain_date }}</div>{% endif %}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
                     </li>
 
                 {% endfor %}
