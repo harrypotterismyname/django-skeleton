@@ -11,7 +11,7 @@
                 {% if request.user == checklist.owner %}
                     <a href="{% url 'mylist:update' checklist.id %}" class="btn btn-success pull-right btn-fork-task"><i
                             class="icon-pencil"></i></a>
-                {% elif requeste.user %}
+                {% elif request.user %}
                     <a href="javascript:clone_checklist({{ checklist.id }});"
                        class="btn btn-warning pull-right btn-fork-task"><i class="icon-ok"></i> Fork this</a>
                 {% endif %}
@@ -30,6 +30,7 @@
                 <div class="clearfix"></div>
                 <hr>
                 {% if tasks %}
+                    <div class="error" id="msg-error"></div>
                     <ul class="task-list">
                         {% for task in tasks %}
 
@@ -158,11 +159,13 @@
                         if(obj != '')
                             if(obj.result != undefined && obj.result != '')
                                 window.location.reload();
-
+                        else{
+                                $("#msg-error").text("Error!")
+                            }
                     }
                 });
             }else{
-
+                  $("#msg-error").text("Error!")
             }
         }
 
