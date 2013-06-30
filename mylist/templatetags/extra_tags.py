@@ -24,9 +24,9 @@ def remain_date(value):
         if hours == 1:
             strHour = ' hour'
 
-        if value.days or hours:
+        if value.days > 0 or hours > 0:
             return str(value.days) + strDay + ', ' + str(hours) + strHour
-        else:
-            return ''
+
+        return ''
     else:
         return ''
