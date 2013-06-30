@@ -9,3 +9,5 @@ media/*
 venv
 venv/*
 *.db
+build
+build/*
