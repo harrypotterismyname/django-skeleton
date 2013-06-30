@@ -11,8 +11,9 @@
             {% if request.user == checklist.owner %}
                 <a href="{% url 'mylist:update' checklist.id %}" class="btn btn-success pull-right btn-fork-task"><i class="icon-pencil"></i></a>
             {% else %}
-                <a href="javascript:clone_checklist({{ checklist.id }});" class="btn btn-warning pull-right btn-fork-task"><i class="icon-ok"></i> Fork this</a>
+                <a href="javascript:clone_checklist('{{ checklist.id }}');" class="btn btn-warning pull-right btn-fork-task"><i class="icon-ok"></i> Fork this</a>
             {% endif %}
+            <a href="javascript:" onclick="window.print();" class="btn btn-success pull-right btn-fork-task"><i class="icon-print"></i></a>
 
             <h2 class="task-title">{{ checklist.title }}</h2>
 
@@ -70,31 +71,22 @@
 
 {% block extra_css %}
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}prettyCheckable/prettyCheckable.css">
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/print.css" media="print"/>
 {% endblock %}
 
 {% block extra_js %}
     <script type="text/javascript" src="{{ STATIC_URL }}prettyCheckable/prettyCheckable.js"></script>
     <script type="text/javascript">
     $(function(){
-        $('input.task').prettyCheckable({
+        var el = $('input.task');
+        el.prettyCheckable({
             color: 'green'
         });
 
-
         {% if checklist.owner != user %}
-
-            $('input.task').attr("disabled","disabled")
-
-
-
+            el.attr("disabled","disabled")
         {% endif %}
-
-
-
-
     });
-
-
 
     $('input.task').on('change', checked);
 

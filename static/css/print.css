@@ -1,0 +1,14 @@
+@media print{
+    .navbar {
+        display: none;
+    }
+    input.task {
+        display: block !important;
+        float: left;
+        width: 24px;
+        height: 24px;
+    }
+    a.checked {
+        display: none !important;
+    }
+}
