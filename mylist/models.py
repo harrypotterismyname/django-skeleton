@@ -26,6 +26,12 @@ class CheckList(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
+
+        #calculate due date for tasks
+        for task in self.tasks:
+            task.calculate_real_due_date()
+            task.save()
+
         super(CheckList, self).save(*args, **kwargs)
 
     def get_list_task(self):
@@ -47,11 +53,35 @@ class Task(models.Model):
     parent = models.ForeignKey('self', null=True, blank=True, related_name='children', verbose_name=_('Parent'))
 
     due_date = models.PositiveSmallIntegerField(_('Due date'), default=0)
+    real_due_date = models.DateTimeField( null= True, blank= True)
 
     is_checked = models.BooleanField(_('Checked'), default=False)
     is_deleted = models.BooleanField(_('Deleted'), default=False)
 
     order = models.PositiveSmallIntegerField(_('Order'), default=0)
+
+    def save(self, *args, **kwargs):
+
+
+        #calculate due date for tasks
+        self.calculate_real_due_date()
+
+        super(Task, self).save(*args, **kwargs)
+
+    def calculate_real_due_date(self):
+
+
+        if self.parent_id > 0:
+            self.due_date = self.parent.due_date
+
+        if self.due_date is None:
+            self.due_date = 0
+
+
+
+        if self.check_list.start_at:
+            self.real_due_date = self.check_list.start_at + datetime.timedelta(days=self.due_date )
+            #self.save()
 
     def can_edit(self, user):
 

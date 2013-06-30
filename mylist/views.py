@@ -41,6 +41,18 @@ class HomeIndex(ListView):
         return context
 
 
+
+class LateTaskView(ListView):
+    model = Task
+    template_name = "mylist/tasks.html"
+    context_object_name = 'items'
+
+    def get(self, request, *args, **kwargs):
+        self.queryset = Task.objects.filter( check_list__owner = request.user,  is_deleted=False, real_due_date__lte = timezone.now())
+        return super(LateTaskView, self).get(request)
+
+
+
 class PublicView(ListView):
     model = CheckList
     template_name = "mylist/public.html"

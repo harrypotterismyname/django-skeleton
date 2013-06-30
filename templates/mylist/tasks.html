@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% load i18n webdesign %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Public Checklist{% endblock %}
 
 {% block content %}
 <div class="container">
     <div class="row">
         <div class="span12">
-            <h1>{% trans "My Checklist" %}</h1>
+              <h1>{% trans "My Checklist" %}</h1>
             <ul class="nav nav-pills">
                 <li {% if not active %}class="active"{% endif %}>
                     <a href="/">Upcoming</a>
@@ -23,24 +23,31 @@
 
             <hr>
 
-            {% if items %}
-                <ul class="checklist-list">
-                    {% for item in items %}
+            <ul class="checklist-list">
+                {% for item in items %}
                     <li>
-                        <h3><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></h3>
+                        <h3><a href="{{ item.check_list.get_absolute_url }}">{{ item.title }}</a></h3>
                         <p>
+                            <!--span class="meta">
+                                <a href="{% url 'userena_profile_detail' item.owner.username %}" class="dark-link">{{ item.owner.username }}</a>
+                                <i class="icon-angle-right"></i>
+                                <time>{{ item.created_at|timesince }} ago</time>
+                            </span-->
+
                             <span class="badge badge-important">{{ item.count_task }} task{{ item.count_task|pluralize }}</span>
-                            {% if item.public %}
-                                <span class="badge"><i class="icon-share-alt"></i></span>
-                            {% endif %}
-                            <time>{{ item.created_at|timesince }} ago</time>
+                            <span class="rating">
+                            <i class="icon-star"></i>
+                            <i class="icon-star"></i>
+                            <i class="icon-star"></i>
+                            <i class="icon-star"></i>
+                            <i class="icon-star-empty"></i>
+                            </span>
                         </p>
+                        <div class="clearfix"></div>
                     </li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-                <p class="text-error">No items.</p>
-            {% endif %}
+                {% endfor %}
+
+            </ul>
 
             <hr>
             <ul class="pager">
