@@ -98,6 +98,9 @@ class UpdateTaskView(View):
         if request.POST.get('value', 'false') == 'true':
             self.task.is_checked = True
 
+        elif request.POST.get('title', None):
+            self.task.title = request.POST.get('title', None)
+
         else:
             self.task.is_checked = False
 

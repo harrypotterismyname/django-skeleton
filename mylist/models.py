@@ -59,6 +59,8 @@ class Task(models.Model):
     is_deleted = models.BooleanField(_('Deleted'), default=False)
 
     order = models.PositiveSmallIntegerField(_('Order'), default=0)
+    last_reminder = models.DateTimeField( null= True, blank= True )
+
 
     def save(self, *args, **kwargs):
         #calculate due date for tasks
