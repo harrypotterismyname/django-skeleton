@@ -43,11 +43,14 @@
                                     <div>
 
                                         <div class="pull-left">
-                                            {% if task.is_overdated == True %}<p class="remain pull-left over-dated">
-                                                Overdated</p>
-                                                {% elif task.remain_date.days > 0 or task.remain_date.seconds > 3600 %}
-                                                <div class="remain">
-                                                next {{ task.remain_date|remain_date }}</div>{% endif %}
+
+                                            {{   task.real_due_date|timeuntil }}
+
+{#                                            {% if task.is_overdated == True %}<p class="remain pull-left over-dated">#}
+{#                                                Overdated</p>#}
+{#                                                {% elif task.remain_date.days > 0 or task.remain_date.seconds > 3600 %}#}
+{#                                                <div class="remain">#}
+{#                                                next {{ task.remain_date|remain_date }}</div>{% endif %}#}
                                         </div>
 
                                         {% if request.user == checklist.owner %}
@@ -71,11 +74,13 @@
                                                     <div>
 
                                                         <div class="pull-left">
-                                                            {% if task.is_overdated == True %}
-                                                                <p class="remain pull-left over-dated">Overdated</p>
-                                                                {% elif task.remain_date.days > 0 or task.remain_date.seconds > 3600 %}
-                                                                <div class="remain">
-                                                                next {{ task.remain_date|remain_date }}</div>{% endif %}
+
+                                                            {{   task.real_due_date|timeuntil }}
+{#                                                            {% if task.is_overdated == True %}#}
+{#                                                                <p class="remain pull-left over-dated">Overdated</p>#}
+{#                                                                {% elif task.remain_date.days > 0 or task.remain_date.seconds > 3600 %}#}
+{#                                                                <div class="remain">#}
+{#                                                                next {{ task.remain_date|remain_date }}</div>{% endif %}#}
                                                         </div>
 
                                                         {% if request.user == checklist.owner %}
