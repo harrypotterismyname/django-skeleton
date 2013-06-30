@@ -145,6 +145,11 @@ fieldset legend {
     color: #ff0000;
 }
 
+.task-list ul li{
+    margin: 15px 0px 15px 5px;
+
+}
+
 .task-metadata {
     font-family: "Segoe UI Light", "SegoeUILight", "Helvetica Neue", "Helvetica", Arial, sans-serif;
     font-size: 24px;
