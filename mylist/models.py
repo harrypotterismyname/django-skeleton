@@ -15,7 +15,7 @@ class CheckList(models.Model):
     owner = models.ForeignKey(user_model_label, null=True, related_name='owner', verbose_name=_('Owner'))
     start_at = models.DateTimeField(_('Start at'))
 
-    parent = models.ForeignKey('self', null=True, blank=True, related_name='children', verbose_name=_('Parent'))
+    parent = models.ForeignKey('self', null=True, blank=True, related_name='children', verbose_name=_('Parent'), on_delete=models.SET_NULL)
     is_deleted = models.BooleanField(_('Deleted'), default=False)
     created_at = models.DateTimeField(_('Created at'), null=True, auto_now_add=True)
     public = models.BooleanField(_('Public'), default=False,
