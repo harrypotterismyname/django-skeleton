@@ -28,7 +28,7 @@ class CheckList(models.Model):
         self.slug = slugify(self.title)
 
         #calculate due date for tasks
-        for task in self.tasks:
+        for task in self.tasks.filter(is_deleted = False):
             task.calculate_real_due_date()
             task.save()
 
