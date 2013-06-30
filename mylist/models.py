@@ -54,12 +54,10 @@ class Task(models.Model):
 
     def can_edit(self, user):
 
-
         if self.check_list.owner == user or user.is_staff:
             return True
 
         return False
-
 
     def __unicode__(self):
         return self.title
@@ -71,7 +69,7 @@ class Task(models.Model):
         return self.children.filter(is_deleted=False)
 
     def count_child_task(self):
-        return self.get_by_is_checked().count()
+        return self.get_child_task().count()
 
     def is_overdated(self):
         if self.check_list.start_at and self.due_date > 0:

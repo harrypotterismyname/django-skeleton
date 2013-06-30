@@ -59,7 +59,7 @@ class DetailView(DetailView):
         context = super(DetailView, self).get_context_data(**kwargs)
 
         id = self.kwargs.get('id')
-        context['tasks'] = Task.objects.filter(is_deleted=False, check_list__id=id, parent__isnull=True)
+        context['tasks'] = Task.objects.filter(is_deleted=False, check_list__id=id, parent__isnull=True).order_by('due_date')
 
         return context
 
