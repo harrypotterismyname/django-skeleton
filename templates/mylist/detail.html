@@ -27,10 +27,21 @@
                 <ul class="task-list">
                 {% for task in tasks %}
 
-                    <li>
+                    <li   >
+
+
+                              {% if task.parent_id > 0 %}
+                                    <i class="icon-circle-blank icon-2x"></i>
+
+                               {% else %}
+
+                            {% endif %}
+
 
                         <input type="checkbox" id="task_{{ task.id }}" class="task" value="1" name="t1" {% if task.is_checked %}checked="true"{% endif %} data-label="{{ task.title }}">
                         {% if task.is_overdated == True %}<p class="remain over-dated">Overdated</p>{% else %}<div class="remain">next {{ task.remain_date|remain_date }}</div>{% endif %}
+
+
                     </li>
 
                 {% endfor %}

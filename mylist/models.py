@@ -44,7 +44,7 @@ class CheckList(models.Model):
 class Task(models.Model):
     title = models.CharField(_('Title'), max_length=255)
     check_list = models.ForeignKey(CheckList, related_name='tasks', verbose_name=_('Checklist'))
-    parent = models.ForeignKey('self', null=True, blank=True, related_name='children', verbose_name=_('Parent'))
+    parent = models.ForeignKey('self', null=True, blank=True, default=0, related_name='children', verbose_name=_('Parent'))
 
     due_date = models.PositiveSmallIntegerField(_('Due date'), default=0)
 
