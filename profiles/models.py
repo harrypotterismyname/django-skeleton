@@ -31,18 +31,8 @@ class Profile(UserenaLanguageBaseProfile):
         new_checklist = CheckList(title=old_checklist.title, owner=self.user, start_at=timezone.now(), parent=old_checklist)
         new_checklist.save()
 
-        for task in old_checklist.tasks.filter(is_deleted=False, parent__isnull = True):
+        for task in old_checklist.tasks.filter(is_deleted=False):
             new_task = Task(title=task.title, check_list=new_checklist, due_date=task.due_date, order=task.order)
             new_task.save()
-
-        parent_tasks = new_checklist.tasks.filter(is_deleted=False)
-
-        for parent_task in parent_tasks :
-
-            child_tasks = parent_task.children.filter(is_delete= False)
-            for task in child_tasks:
-
-                new_task = Task(title=task.title, check_list=new_checklist, due_date=task.due_date, order=task.order)
-                new_task.save()
 
         return  new_checklist.id
