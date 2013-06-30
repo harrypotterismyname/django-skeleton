@@ -1,4 +1,5 @@
 import datetime
+from django.core.urlresolvers import reverse
 
 from django.http import HttpResponseRedirect, HttpResponse
 from django.utils import timezone
@@ -41,16 +42,15 @@ class HomeIndex(ListView):
         return context
 
 
-
 class LateTaskView(ListView):
     model = Task
     template_name = "mylist/tasks.html"
     context_object_name = 'items'
 
     def get(self, request, *args, **kwargs):
-        self.queryset = Task.objects.filter( check_list__owner = request.user,  is_deleted=False, real_due_date__lte = timezone.now())
+        self.queryset = Task.objects.filter(check_list__owner=request.user, is_deleted=False,
+                                            real_due_date__lte=timezone.now())
         return super(LateTaskView, self).get(request)
-
 
 
 class PublicView(ListView):
@@ -70,38 +70,32 @@ class DetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(DetailView, self).get_context_data(**kwargs)
 
-        id = self.kwargs.get('id')
-        context['tasks'] = Task.objects.filter(is_deleted=False, check_list__id=id, parent__isnull=True).order_by('due_date')
+        checklist_id = self.kwargs.get('id')
+        context['tasks'] = Task.objects.filter(is_deleted=False,
+                                               check_list__id=int(checklist_id),
+                                               parent__isnull=True).order_by('due_date')
 
         return context
 
 
-
 class CloneChecklistView(View):
 
-   # model = Task
     def post(self, request, *args, **kwargs):
-        checklist_id= kwargs.get('id')
+        checklist_id = kwargs.get('id')
         self.old_checklist = CheckList.objects.get(id=int(checklist_id))
         new_checklist = request.user.profile.clone_checklist(self.old_checklist)
 
-
-        return HttpResponse(simplejson.dumps({'new_checklist_id':str(new_checklist.id)}, ensure_ascii= False))
-
-
-    #model = Task
-    #template_name = "mylist/ajax-result.html"
+        return HttpResponse(simplejson.dumps({'new_checklist_id': str(new_checklist.id)}, ensure_ascii=False))
 
 
 class UpdateTaskView(View):
 
-   # model = Task
     def post(self, request, *args, **kwargs):
-        task_id= kwargs.get('id')
-        self.task = Task.objects.get(id= task_id)
+        task_id = kwargs.get('id')
+        self.task = Task.objects.get(id=task_id)
         print task_id
 
-        if request.POST.get('value','false') == 'true':
+        if request.POST.get('value', 'false') == 'true':
             self.task.is_checked = True
 
         else:
@@ -109,11 +103,7 @@ class UpdateTaskView(View):
 
         self.task.save()
 
-        return HttpResponse(simplejson.dumps({'result':'ok'}, ensure_ascii= False))
-
-
-    #model = Task
-    #template_name = "mylist/ajax-result.html"
+        return HttpResponse(simplejson.dumps({'result': 'ok'}, ensure_ascii=False))
 
 
 class AddNewView(FormView):
@@ -128,7 +118,7 @@ class AddNewView(FormView):
         num_task = request.POST.get('num_task', None)
         tasks = []
         if num_task:
-            for i in range(1, int(num_task)):
+            for i in range(1, int(num_task)+1):
                 t = request.POST.get('title%d' % i, '')
                 d = request.POST.get('due%d' % i, None)
                 if t:
@@ -170,6 +160,7 @@ class UpdateChecklist(FormView):
         context = super(UpdateChecklist, self).get_context_data(**kwargs)
         if self.instance:
             context['tasks'] = self.instance.tasks.filter(is_deleted=False)
+            context['checklist_id'] = self.instance.id
         return context
 
     def get(self, request, *args, **kwargs):
@@ -180,7 +171,6 @@ class UpdateChecklist(FormView):
             if instance.start_at is None:
                 instance.start_at = timezone.now()
                 instance.save()
-
 
             self.initial['start_at'] = datetime.datetime.strftime(instance.start_at, "%d/%m/%Y")
             self.initial['public'] = instance.public
@@ -202,11 +192,40 @@ class UpdateChecklist(FormView):
         instance = self.get_query(kwargs)
         if title:
             start_at = datetime.datetime.combine(datetime.datetime.strptime(start_at, "%d/%m/%Y"), datetime.time(0, 0))
-            instance.title=title
-            instance.public=public
-            instance.start_at=start_at
+            instance.title = title
+            instance.public = public
+            instance.start_at = start_at
             instance.save()
 
             return HttpResponseRedirect(instance.get_absolute_url())
 
         return super(UpdateChecklist, self).post(request)
+
+
+class AddTaskView(View):
+    def post(self, request, *args, **kwargs):
+        checklist_id = request.POST.get('checklist_id', None)
+        if checklist_id:
+            checklist = CheckList.objects.get(pk=int(checklist_id))
+
+            num_task = request.POST.get('num_task', None)
+            tasks = []
+            if num_task:
+                for i in range(1, int(num_task)+1):
+                    t = request.POST.get('title%d' % i, '')
+                    d = request.POST.get('due%d' % i, None)
+                    if t:
+                        tasks.append([t, d])
+
+            # create tasks
+            count = 0
+            for t in tasks:
+                count += 1
+                if t[1]:
+                    Task.objects.create(title=t[0], check_list=checklist, due_date=t[1], order=count)
+                else:
+                    Task.objects.create(title=t[0], check_list=checklist, order=count)
+
+                return HttpResponseRedirect(checklist.get_absolute_url())
+
+        return HttpResponseRedirect('/')
